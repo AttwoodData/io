@@ -32,14 +32,18 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
         main {
-            padding: 2rem;
-            max-width: 1200px;
+            padding: 1rem; /* Reduced padding to give more space */
+            max-width: 1400px; /* Increased max-width */
             margin: 0 auto;
         }
         .dashboard-container {
             width: 100%;
-            height: 800px;
+            height: 1000px; /* Increased height */
             margin-top: 2rem;
+        }
+        #tableauViz {
+            width: 100%;
+            height: 100%;
         }
         footer {
             background-color: #333;
@@ -90,10 +94,10 @@
             var containerDiv = document.getElementById("tableauViz"),
                 url = "https://us-east-1.online.tableau.com/t/attwoodanalytics-3707329739/views/GNMA/GNMADelinquency",
                 options = {
-                    hideTabs: true,
-                    hideToolbar: true,
+                    hideTabs: false,  // Show tabs for better navigation
+                    hideToolbar: false, // Show toolbar for better functionality
                     width: "100%",
-                    height: "100%"
+                    height: "100%"  // Fill container
                 };
             
             var viz = new tableau.Viz(containerDiv, url, options);
