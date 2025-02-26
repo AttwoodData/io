@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tableau Dashboard</title>
+    <script>
+        // Check if already authenticated
+        if(localStorage.getItem('authenticated') === 'true') {
+            window.location.href = 'dashboard.html';
+        } else {
+            window.location.href = 'login.html';
+        }
+    </script>
+</head>
+<body>
+    <!-- This page just redirects to either the login page or dashboard based on authentication status -->
+</body>
+</html>

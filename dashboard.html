@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tableau Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout-btn {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .dashboard-container {
+            width: 100%;
+            height: 800px;
+            margin-top: 2rem;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Dashboard Portal</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+    
+    <main>
+        <h2>Welcome to my Tableau Dashboard</h2>
+        <p>Please explore the data visualization below.</p>
+        
+        <div class="dashboard-container">
+            <!-- Tableau dashboard will be embedded here -->
+            <div id='tableauViz'></div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 My Dashboard Portal</p>
+    </footer>
+
+    <!-- Authentication check -->
+    <script>
+        // Check if user is authenticated
+        if(localStorage.getItem('authenticated') !== 'true') {
+            window.location.href = 'index.html';
+        }
+        
+        function logout() {
+            localStorage.removeItem('authenticated');
+            window.location.href = 'index.html';
+        }
+    </script>
+
+    <!-- Tableau JavaScript API -->
+    <script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+    <script type="text/javascript">
+        function initViz() {
+            var containerDiv = document.getElementById("tableauViz"),
+                url = "https://us-east-1.online.tableau.com/t/attwoodanalytics-3707329739/views/GNMA/GNMADelinquency",
+                options = {
+                    hideTabs: true,
+                    hideToolbar: true,
+                    width: "100%",
+                    height: "100%"
+                };
+            
+            var viz = new tableau.Viz(containerDiv, url, options);
+        }
+
+        document.addEventListener("DOMContentLoaded", initViz);
+    </script>
+</body>
+</html>
