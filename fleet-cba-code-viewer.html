@@ -517,22 +517,29 @@ if __name__ == "__main__":
                 // Add line number
                 processedHTML += `<span class="line"><span class="line-number">${index + 1}</span>`;
                 
-                // Apply basic syntax highlighting
+                // Apply basic syntax highlighting - fixed regex patterns to avoid incorrect replacement
                 let highlightedLine = line
-                    // Keywords
-                    .replace(/\b(class|def|import|from|return|if|else|elif|for|while|in|as|try|except|finally|with|not|and|or|True|False|None|self|super|__init__|break|continue|pass)\b/g, '<span class="keyword">$1</span>')
-                    // Strings
-                    .replace(/(".*?"|'.*?')/g, '<span class="string">$1</span>')
-                    // Comments
-                    .replace(/(#.*$)/g, '<span class="comment">$1</span>')
-                    // Functions
-                    .replace(/\b(\w+)\(/g, '<span class="function">$1</span>(')
-                    // Class names
-                    .replace(/\bclass\s+(\w+)/g, 'class <span class="class">$1</span>')
-                    // Numbers
-                    .replace(/\b(\d+(\.\d+)?)\b/g, '<span class="number">$1</span>')
+                    // Keywords with word boundaries to prevent partial matches
+                    .replace(/\b(class|def|import|from|return|if|else|elif|for|while|in|as|try|except|finally|with|not|and|or|True|False|None|self|super|__init__|break|continue|pass)\b/g, 
+                        '<span class="keyword">$1</span>')
+                    // Strings with proper escaping for quotes
+                    .replace(/(["'])((?:\\.|[^\\"])*?)\1/g, 
+                        '<span class="string">$1$2$1</span>')
+                    // Comments until end of line
+                    .replace(/(#.*)$/g, 
+                        '<span class="comment">$1</span>')
+                    // Functions with word boundary
+                    .replace(/\b(\w+)(\()/g, 
+                        '<span class="function">$1</span>$2')
+                    // Class names after 'class' keyword
+                    .replace(/\b(class)\s+(\w+)/g, 
+                        '$1 <span class="class">$2</span>')
+                    // Numbers with word boundaries
+                    .replace(/\b(\d+(\.\d+)?)\b/g, 
+                        '<span class="number">$1</span>')
                     // Decorators
-                    .replace(/(@\w+)/g, '<span class="decorator">$1</span>');
+                    .replace(/(@\w+)/g, 
+                        '<span class="decorator">$1</span>');
                 
                 processedHTML += highlightedLine + '</span>\n';
             });
