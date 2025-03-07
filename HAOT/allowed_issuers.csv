@@ -1,0 +1,7 @@
+investor,allowed_issuers,min_expiration_date,min_allocation
+BankOfAmerica,"['A', 'B', 'C', 'E', 'D']",2025-03-15,500000
+JPMorgan,"['A', 'D', 'I', 'H']",2025-04-15,700000
+WellsFargo,"['B', 'F', 'J', 'E']",2025-03-15,600000
+CitiBank,"['C', 'G', 'A']",2025-04-15,500000
+GoldmanSachs,"['A', 'B', 'H', 'I', 'J']",2025-03-15,800000
+MorganStanley,"['C', 'I', 'D', 'G']",2025-05-15,600000
