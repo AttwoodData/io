@@ -6,11 +6,22 @@
     <title>Mark Attwood Data Analytics Dashboard</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+    /* Use this as a fallback if the background image fails to load */
+    background-color: #f5f5f5;
+
+    /* Add these lines for the fractal PNG */
+    background-image: url('images/wallpaper_tree.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    /* If you want the background to stay in place while scrolling: */
+    background-attachment: fixed;
+}
         header {
             background-color: white;
             padding: 0;
