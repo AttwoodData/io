@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GBM Framework - Mark Attwood Data Analytics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            
+            /* Use this as a fallback if the background image fails to load */
+            background-color: #f5f5f5;
+
+            /* Add these lines for the fractal PNG */
+            background-image: url('images/wallpaper_tree.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+
+            /* If you want the background to stay in place while scrolling: */
+            background-attachment: fixed;
+        }
+        header {
+            background-color: white;
+            padding: 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        main {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            line-height: 1.6;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        .project-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .project-title {
+            flex: 2;
+            min-width: 300px;
+        }
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .project-link {
+            display: inline-block;
+            background-color: #7E57C2;
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+        .project-link:hover {
+            background-color: #6A48B0;
+        }
+        .algorithm-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        .algorithm-table th, .algorithm-table td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        .algorithm-table th {
+            background-color: #f2f2f2;
+        }
+        .algorithm-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .code-block {
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre;
+            word-break: normal;
+            word-wrap: normal;
+            color: #333;
+            border-left: 4px solid #7E57C2;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .feature-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .feature-card h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: #5C6BC0;
+        }
+    </style>
+    <script src="header-component.js"></script>
+</head>
+<body>
+    <div id="header-container"></div>
+    
+    <main>
+        <div class="project-container">
+            <div class="project-header">
+                <div class="project-title">
+                    <h1>GBM Framework</h1>
+                    <p>A unified framework for Gradient Boosting Models with SHAP analysis and system optimization.</p>
+                </div>
+                <div class="project-links">
+                    <a href="https://pypi.org/project/gbmframework/" class="project-link" target="_blank">PyPI Package</a>
+                    <a href="https://github.com/AttwoodData/gbmframework" class="project-link" target="_blank">GitHub Repo</a>
+                </div>
+            </div>
+            
+            <p>GBM Framework is a comprehensive Python package designed to streamline the process of building and evaluating gradient boosting models for binary classification. It provides a consistent API across multiple boosting implementations, automated hyperparameter optimization, and built-in explainability through SHAP analysis.</p>
+            
+            <h2>Project Overview</h2>
+            <p>The purpose of this project was to create an all-in-one solution for students and resource-strapped analysts and data scientists to efficiently build and evaluate boosted tree models. The framework supports four powerful tree-based ensemble methods, each with unique strengths, while providing a standardized workflow for model training, evaluation, and interpretation.</p>
+            
+            <h2>Gradient Boosting Algorithms</h2>
+            
+            <p>The framework supports these major tree-based ensemble methods:</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>XGBoost</h3>
+                    <p>Excellent on medium-sized datasets with regularization to control overfitting. Handles sparse data well and provides overall high performance.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>LightGBM</h3>
+                    <p>Very fast on wide datasets with many features. Uses GOSS and EFB techniques for efficient training with low memory usage.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>CatBoost</h3>
+                    <p>Superior handling of categorical features without preprocessing. Robust against overfitting with excellent performance out-of-the-box.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>Random Forest</h3>
+                    <p>Good baseline performance with fewer hyperparameters. Less prone to overfitting and provides good predictive uncertainty estimates.</p>
+                </div>
+            </div>
+            
+            <h3>Algorithm Comparison</h3>
+            <table class="algorithm-table">
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Very Wide Data</th>
+                        <th>Very Tall Data</th>
+                        <th>Categorical Features</th>
+                        <th>Training Speed</th>
+                        <th>Default Performance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>XGBoost</td>
+                        <td>Good</td>
+                        <td>Moderate</td>
+                        <td>Requires encoding</td>
+                        <td>Moderate</td>
+                        <td>Very Good</td>
+                    </tr>
+                    <tr>
+                        <td>LightGBM</td>
+                        <td>Excellent</td>
+                        <td>Excellent</td>
+                        <td>Good</td>
+                        <td>Very Fast</td>
+                        <td>Good</td>
+                    </tr>
+                    <tr>
+                        <td>CatBoost</td>
+                        <td>Good</td>
+                        <td>Good</td>
+                        <td>Excellent</td>
+                        <td>Moderate</td>
+                        <td>Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>Random Forest</td>
+                        <td>Moderate</td>
+                        <td>Good</td>
+                        <td>Requires encoding</td>
+                        <td>Fast</td>
+                        <td>Moderate</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>Key Features</h2>
+            
+            <h3>System Optimization</h3>
+            <p>The framework includes a SystemOptimizer that automatically detects system resources and configures optimal thread counts and memory usage for training and SHAP calculations:</p>
+            <div class="code-block">from gbmframework.optimizer import SystemOptimizer
+
+optimizer = SystemOptimizer(
+    enable_parallel=True,  # Whether to enable parallel computation
+    memory_safety=0.8,     # Memory safety factor (0.0-1.0)
+    verbose=True           # Whether to print optimization information
+)</div>
+            
+            <h3>Consistent Training API</h3>
+            <p>All training functions follow a consistent pattern, with algorithm-specific additions:</p>
+            <div class="code-block">from gbmframework.models import train_xgboost
+
+result = train_xgboost( X_train, # Training features (DataFrame or ndarray)
+y_train, # Training labels (Series or ndarray)
+X_test, # Test features for evaluation during training
+y_test, # Test labels for evaluation
+hyperopt_space=None, # Custom hyperopt search space dictionary (optional)
+max_evals=50, # Number of hyperparameter evaluations to perform
+handle_imbalance=False, # Whether to handle class imbalance
+random_state=42, # Random seed for reproducibility
+optimizer=None # SystemOptimizer instance (optional) )</div>
+            
+            <h3>Integrated SHAP Analysis</h3>
+            <p>The framework provides built-in SHAP value integration for model explainability:</p>
+            <div class="code-block">from gbmframework.shap_utils import generate_shap_values, visualize_shap # Generate SHAP values
+
+shap_result = generate_shap_values( model, # Trained model object
+X, # Feature dataset (typically X_test or a sample)
+sample_size=None, # Number of samples to use (default: auto-detect)
+verbose=1, # Verbosity level (0: silent, 1: normal, 2: detailed)
+optimizer=None # SystemOptimizer instance ) # Visualize SHAP values
+
+figure = visualize_shap( shap_result, # Result from generate_shap_values()
+plot_type='summary', # Plot type: 'summary', 'bar', 'beeswarm', 'waterfall', 'dependence'
+max_display=20, # Maximum number of features to display
+plot_size=(12, 8) # Size of the plot in inches )</div>
+            
+            <h2>Installation</h2>
+            <div class="code-block"># Basic installation
+pip install gbmframework
+
+# With specific boosting libraries
+pip install gbmframework[xgboost]    # With XGBoost
+pip install gbmframework[lightgbm]   # With LightGBM
+pip install gbmframework[catboost]   # With CatBoost
+pip install gbmframework[shap]       # With SHAP for explainability
+pip install gbmframework[all]        # All dependencies</div>
+            
+            <h2>Project Benefits</h2>
+            <ul>
+                <li><strong>Efficiency:</strong> Streamlines the workflow for gradient boosting models with a consistent API</li>
+                <li><strong>Resource Optimization:</strong> Automatically configures optimal thread counts and memory usage</li>
+                <li><strong>Hyperparameter Tuning:</strong> Built-in hyperparameter optimization with hyperopt</li>
+                <li><strong>Explainability:</strong> Integrated SHAP analysis for model interpretation</li>
+                <li><strong>Flexibility:</strong> Support for multiple boosting algorithms with algorithm-specific optimizations</li>
+                <li><strong>Consistency:</strong> Standardized evaluation metrics and visualization across different algorithms</li>
+            </ul>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Mark Attwood Data Analytics</p>
+    </footer>
+</body>
+</html>
