@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Boosting Model Benchmark Analysis - Mark Attwood Data Analytics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            
+            /* Use this as a fallback if the background image fails to load */
+            background-color: #f5f5f5;
+
+            /* Add these lines for the fractal PNG */
+            background-image: url('images/wallpaper_tree.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+
+            /* If you want the background to stay in place while scrolling: */
+            background-attachment: fixed;
+        }
+        header {
+            background-color: white;
+            padding: 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        main {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            line-height: 1.6;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        .project-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .chart-image {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .algorithm-comparison {
+            overflow-x: auto;
+        }
+        .algorithm-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        .algorithm-table th, .algorithm-table td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        .algorithm-table th {
+            background-color: #f2f2f2;
+        }
+        .algorithm-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+    <script src="header-component.js"></script>
+</head>
+<body>
+    <div id="header-container"></div>
+    
+    <main>
+        <div class="project-container">
+            <div class="project-header">
+                <div class="project-title">
+                    <h1>Gradient Boosting Model Benchmark Analysis</h1>
+                    <p>Comprehensive performance evaluation of gradient boosting algorithms across several datasets</p>
+                </div>
+            </div>
+            
+            <p>Our analysis compares the performance of four gradient boosting algorithms: CatBoost, LightGBM, Random Forest, and XGBoost. By examining their performance across several datasets using multiple metrics, we provide insights into their capabilities.</p>
+            
+            <h2>Benchmark Methodology</h2>
+            <p>Using the GBM Framework, we create a unified interface for training and evaluating gradient boosting models. Several datasets from different domains are used for comparison.</p>
+            
+            <h2>Dataset Characteristics</h2>
+            <p>Our analysis includes six datasets with varying characteristics:</p>
+            
+            <div class="algorithm-comparison">
+                <table class="algorithm-table">
+                    <thead>
+                        <tr>
+                            <th>Dataset</th>
+                            <th>Samples</th>
+                            <th>Features</th>
+                            <th>Class Distribution</th>
+                            <th>Class Ratio</th>
+                            <th>Domain</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Breast Cancer</td>
+                            <td>569</td>
+                            <td>30</td>
+                            <td>212 : 357</td>
+                            <td>1.68</td>
+                            <td>Medical Diagnosis</td>
+                        </tr>
+                        <tr>
+                            <td>Diabetes (Binary)</td>
+                            <td>442</td>
+                            <td>10</td>
+                            <td>221 : 221</td>
+                            <td>1.00</td>
+                            <td>Health Prediction</td>
+                        </tr>
+                        <tr>
+                            <td>Iris (Binary)</td>
+                            <td>150</td>
+                            <td>4</td>
+                            <td>50 : 100</td>
+                            <td>2.00</td>
+                            <td>Flower Classification</td>
+                        </tr>
+                        <tr>
+                            <td>Wine (Binary)</td>
+                            <td>178</td>
+                            <td>13</td>
+                            <td>59 : 119</td>
+                            <td>2.02</td>
+                            <td>Beverage Classification</td>
+                        </tr>
+                        <tr>
+                            <td>CA Housing (Binary)</td>
+                            <td>20,640</td>
+                            <td>8</td>
+                            <td>10,323 : 10,317</td>
+                            <td>1.00</td>
+                            <td>Real Estate Pricing</td>
+                        </tr>
+                        <tr>
+                            <td>Synthetic</td>
+                            <td>1,000</td>
+                            <td>20</td>
+                            <td>696 : 304</td>
+                            <td>2.29</td>
+                            <td>Artificial Test Data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Dataset Characteristics and Preprocessing</h3>
+            <p>We observe several key characteristics in the selected datasets:</p>
+            <ul>
+                <li><strong>Sample Sizes:</strong> Ranging from 150 to 20,640 samples, most datasets are relatively small for gradient boosting models. Machine learning practitioners typically recommend thousands to tens of thousands of samples for robust performance.</li>
+                <li><strong>Feature Complexity:</strong> Feature count varies from 4 to 30, with low sample sizes potentially limiting the algorithms' ability to learn complex feature interactions.</li>
+                <li><strong>Class Balance:</strong> Datasets include both balanced (Diabetes) and imbalanced (Breast Cancer, Synthetic) classifications</li>
+                <li><strong>Domains:</strong> Includes medical, health, botanical, real estate, and synthetic data</li>
+            </ul>
+            
+            <p>Gradient boosting models typically require substantial training data to:</p>
+            <ul>
+                <li>Effectively learn complex decision boundaries</li>
+                <li>Reduce overfitting</li>
+                <li>Capture nuanced feature interactions</li>
+                <li>Stabilize model performance</li>
+            </ul>
+            
+            <p>The small dataset sizes mean these results should be interpreted as preliminary indicators rather than definitive performance metrics.</p>
+            
+            <div class="chart-container">
+                <img src="images/auc_heatmap.png" alt="AUC Scores Across Datasets and Algorithms" class="chart-image" style="width: 800px">
+            </div>
+
+            <div class="chart-container">
+                <img src="images/avg_performance.png" alt="Average Performance by Algorithm" class="chart-image" style="width: 800px">
+            </div>
+            
+            <div class="chart-container">
+                <img src="images/avg_rank.png" alt="Average Algorithm Rank Across Datasets" class="chart-image" style="width: 800px">
+            </div>
+            <div class="chart-container">
+                <img src="images/time_comparison.png" alt="Average Computation Time by Algorithm" class="chart-image" style="width: 800px">
+            </div>
+            
+            <h2>Key Findings</h2>
+            
+            <h3>Performance Metrics</h3>
+            <p>Our analysis reveals the following performance characteristics:</p>
+            <div class="algorithm-comparison">
+                <table class="algorithm-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Average AUC</th>
+                            <th>Average Accuracy</th>
+                            <th>Average F1 Score</th>
+                            <th>Average Precision</th>
+                            <th>Average Recall</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CatBoost</td>
+                            <td>0.943</td>
+                            <td>0.919</td>
+                            <td>0.921</td>
+                            <td>0.921</td>
+                            <td>0.921</td>
+                        </tr>
+                        <tr>
+                            <td>XGBoost</td>
+                            <td>0.936</td>
+                            <td>0.912</td>
+                            <td>0.914</td>
+                            <td>0.915</td>
+                            <td>0.914</td>
+                        </tr>
+                        <tr>
+                            <td>LightGBM</td>
+                            <td>0.931</td>
+                            <td>0.907</td>
+                            <td>0.909</td>
+                            <td>0.910</td>
+                            <td>0.909</td>
+                        </tr>
+                        <tr>
+                            <td>Random Forest</td>
+                            <td>0.925</td>
+                            <td>0.900</td>
+                            <td>0.902</td>
+                            <td>0.903</td>
+                            <td>0.902</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Computational Efficiency</h3>
+            <p>Our investigation reveals the following computational characteristics:</p>
+            <ul>
+                <li><strong>XGBoost</strong>: Fastest training time at approximately 2.6 seconds</li>
+                <li><strong>LightGBM</strong>: Quick training at around 4.0 seconds</li>
+                <li><strong>Random Forest</strong>: Longer training time at 33.2 seconds</li>
+                <li><strong>CatBoost</strong>: Longest training time at 40.1 seconds</li>
+            </ul>
+            
+            <h2>Key Takeaways</h2>
+            <ul>
+                <li>CatBoost consistently performs best across most metrics</li>
+                <li>XGBoost shows strong performance with good computational efficiency</li>
+                <li>LightGBM offers the second-fastest training times</li>
+                <li>Performance varies across different datasets</li>
+            </ul>
+            
+            <h2>Benchmark Limitations</h2>
+            <p>While our analysis provides insights, we acknowledge several significant limitations:</p>
+            
+            <h3>Dataset Constraints</h3>
+            <ul>
+                <li><strong>Limited Dataset Size:</strong> Most datasets are small, with only California Housing exceeding 1,000 samples. This limits the generalizability of the results.</li>
+                <li><strong>Simple Feature Spaces:</strong> Datasets have relatively few features (4-30), which may not represent the complexity of real-world machine learning problems.</li>
+                <li><strong>Synthetic Datasets:</strong> While the synthetic dataset adds some variation, it cannot fully capture the nuanced challenges of domain-specific data.</li>
+            </ul>
+            
+            <h3>Computational Considerations</h3>
+            <ul>
+                <li><strong>Hardware Specificity:</strong> Benchmarks are run on a single hardware configuration, which may not generalize across different computational environments.</li>
+                <li><strong>Limited Hyperparameter Tuning:</strong> Despite using Hyperopt, the search space and number of evaluations are constrained.</li>
+                <li><strong>Simplified Binary Classification:</strong> Many original multi-class datasets are converted to binary, potentially losing nuanced classification information.</li>
+            </ul>
+            
+            <h3>Scope of Evaluation</h3>
+            <ul>
+                <li><strong>Narrow Performance Metrics:</strong> While AUC, accuracy, and F1 score provide insights, they don't capture all aspects of model performance.</li>
+                <li><strong>Lack of Real-World Context:</strong> Performance on academic datasets may differ significantly from production machine learning scenarios.</li>
+                <li><strong>No Consideration of:</strong>
+                    <ul>
+                        <li>Model interpretability</li>
+                        <li>Inference time</li>
+                        <li>Memory consumption</li>
+                        <li>Deployment complexity</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h3>Recommendations for Comprehensive Evaluation</h3>
+            <p>To obtain a more robust understanding of gradient boosting algorithms, future research should:</p>
+            <ul>
+                <li>Include larger, more complex real-world datasets</li>
+                <li>Test on multiple hardware configurations</li>
+                <li>Expand hyperparameter optimization</li>
+                <li>Include additional performance metrics</li>
+                <li>Consider practical deployment considerations</li>
+            </ul>
+            
+            <p><strong>Caveat:</strong> These results should be interpreted as a preliminary comparison, not a definitive ranking of algorithm capabilities. Always validate performance on your specific use case and dataset.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Mark Attwood Data Analytics</p>
+    </footer>
+</body>
+</html>
