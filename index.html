@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mark Attwood - Data Science & Analytics</title>
+    <meta name="description" content="Data Scientist & Analytics Specialist specializing in machine learning, statistical modeling, and data visualization. MA Economics with expertise in Python, R, and advanced analytics.">
+    <meta name="keywords" content="data science, analytics, machine learning, statistics, economics, Python, R, Columbia Missouri">
+    <meta name="author" content="Mark Attwood">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,6 +37,222 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        /* Enhanced About Section */
+        .about-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .about-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-header .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content {
+            line-height: 1.6;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .about-content p {
+            margin-bottom: 1rem;
+        }
+
+        /* Quick Facts Section */
+        .quick-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .fact-card {
+            background: linear-gradient(135deg, #7E57C2 0%, #5C6BC0 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .fact-card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+
+        .fact-card p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: inline-block;
+            background-color: #7E57C2;
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background-color: #6A48B0;
+            transform: translateY(-2px);
+        }
+
+        .nav-button.secondary {
+            background-color: transparent;
+            border: 2px solid #7E57C2;
+            color: #7E57C2;
+        }
+
+        .nav-button.secondary:hover {
+            background-color: #7E57C2;
+            color: white;
+        }
+
+        /* CV Preview Section */
+        .cv-preview {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .cv-preview h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .cv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .cv-highlight {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #7E57C2;
+        }
+
+        .cv-highlight h3 {
+            margin-top: 0;
+            color: #7E57C2;
+        }
+
+        .download-cv {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-download {
+            background: #27ae60;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-download:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        /* Skills Technology Showcase */
+        .tech-showcase {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        .tech-showcase h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .tech-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        .tech-item:hover {
+            opacity: 1;
+        }
+
+        .tech-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .tech-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Projects Section - maintaining your existing styles */
         h1, h2, h3 {
             color: #333;
         }
@@ -96,13 +315,6 @@
         .view-project:hover {
             background-color: #6A48B0;
         }
-        .about-section {
-            background-color: white;
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-        }
         footer {
             background-color: #333;
             color: white;
@@ -110,81 +322,242 @@
             padding: 1rem;
             margin-top: 2rem;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-header h1 {
+                font-size: 2rem;
+            }
+            
+            .cv-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .quick-facts {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-logos {
+                gap: 1rem;
+            }
+
+            main {
+                padding: 0.5rem;
+            }
+        }
     </style>
-    
+    <!-- Maintain your existing header component system -->
+    <script src="header-component.js"></script>
 </head>
 <body>
-    
+    <!-- Your existing header component -->
+    <div id="header-container"></div>
     
     <main>
+        <!-- Enhanced About Me Section -->
         <section class="about-section">
-            <h1>Data-Driven Solutions</h1>
-            <p>Welcome to my portfolio of select data science and analytics projects. I specialize in transforming complex data into actionable insights through statistical analysis, machine learning, and data visualization.</p>
-            <p>With a background in economics, business, computer science, and mathematics and a focus on practical applications, I help organizations make informed decisions and manage risk.</p>
+            <div class="about-header">
+                <h1>Mark Attwood</h1>
+                <p class="subtitle">Economist & Data Scientist | Learning and Sharing Analytical Solutions</p>
+            </div>
+            
+            <div class="about-content">
+                <p>I'm an economist turned data scientist who spent 12 years building a million-dollar coffee business while earning my MA in Economics. Now I focus on machine learning and statistical modeling, with a particular interest in causal inference and healthcare analytics.</p>
+                
+                <p>Economics taught me that stories are rarely simple and every decision has hidden costs. Data science lets me quantify these trade-offs and uncover the costs that surface-level analysis might miss. At Veterans United Home Loans, I developed delinquency prediction models for multi-billion dollar mortgage portfolios that replaced grid-based systems with continuous modeling. The old approach used discrete FICO score bins where a loan with a 759 score was valued identically to one with a 740 score, but a 760 score received a substantial jump in valuation despite minimal marginal risk difference. My continuous models revealed the hidden cost of this approach: suboptimal keep-versus-sell decisions that left money on the table when meeting portfolio retention targets.</p>
+                
+                <p>My self-directed work applies this same economic reasoning to broader problems. For coursework, I built a comprehensive benefit-cost analysis for the City of Kirkwood's fleet electrification policy, demonstrating how economic trade-offs play out in municipal decision-making. On my own time, I created an open-source Python package that unifies gradient boosting algorithms with automated hyperparameter optimization and system resource detection, filling a gap for analysts working on local machines without dedicated infrastructure teams. These projects reflect my belief that good analysis requires understanding both the technical tools and the underlying questions they're meant to answer.</p>
+                
+                <p>I'm drawn to problems where insights into causality can complement and yield as much value as predicting outcomes. I want to know not only what works, but why it works. This perspective becomes especially valuable when the stakes are high and getting the causal relationships right makes a real difference.</p>
+            </div>
+
+            <!-- Quick Facts -->
+            <div class="quick-facts">
+                <div class="fact-card">
+                    <h3>MA Economics</h3>
+                    <p>University of Missouri-St. Louis<br>GPA: 3.914 | 3 Graduate Certificates</p>
+                </div>
+                <div class="fact-card">
+                    <h3>Expert Skills</h3>
+                    <p>Python, SQL, R, Machine Learning<br>Statistical Modeling & Econometrics</p>
+                </div>
+                <div class="fact-card">
+                    <h3>Business Experience</h3>
+                    <p>$1M Annual Revenue Business<br>12 Years Ownership (2012-2024)</p>
+                </div>
+                <div class="fact-card">
+                    <h3>Open Source</h3>
+                    <p>GBM Framework Package<br>Published on PyPI</p>
+                </div>
+            </div>
+
+            <!-- Technology Showcase -->
+            <div class="tech-showcase">
+                <h3>Core Technologies & Frameworks</h3>
+                <div class="tech-logos">
+                    <div class="tech-item">
+                        <div class="tech-icon" style="background: #3776ab; color: white;">Py</div>
+                        <div class="tech-label">Python</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon" style="background: #336791; color: white;">SQL</div>
+                        <div class="tech-label">SQL</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon" style="background: #276dc3; color: white;">R</div>
+                        <div class="tech-label">R</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon" style="background: #ff6f00; color: white;">XGB</div>
+                        <div class="tech-label">XGBoost</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon" style="background: #007acc; color: white;">LGB</div>
+                        <div class="tech-label">LightGBM</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon" style="background: #ffcc02; color: #333;">CAT</div>
+                        <div class="tech-label">CatBoost</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="nav-buttons">
+                <a href="#cv-preview" class="nav-button">View My Background</a>
+                <a href="#projects" class="nav-button secondary">See My Projects</a>
+                <a href="mailto:markattwood12@gmail.com" class="nav-button secondary">Get In Touch</a>
+            </div>
+        </section>
+
+        <!-- CV Preview Section -->
+        <section id="cv-preview" class="cv-preview">
+            <h2>Professional Background</h2>
+            
+            <div class="cv-grid">
+                <div class="cv-highlight">
+                    <h3>Current Focus</h3>
+                    <p><strong>Seeking:</strong> Data Analyst, Business Intelligence, or Healthcare Analytics roles in Columbia, MO area</p>
+                    <p><strong>Target Specialization:</strong> Causal Machine Learning in Healthcare/Biomedical applications</p>
+                    <p><strong>Geographic Constraint:</strong> Columbia, MO (wife in 4-year veterinary program at Mizzou)</p>
+                </div>
+
+                <div class="cv-highlight">
+                    <h3>Recent Experience</h3>
+                    <p><strong>Capital Markets Analyst</strong><br>Veterans United Home Loans (July 2024 - February 2025)</p>
+                    <p>Developed machine learning models and automation tools for billion-dollar mortgage portfolio management. Built XGBoost delinquency prediction models and Python ETL pipelines replacing complex Excel systems. Created dashboards that identified expenditure irregularities and tracked cost-saving programs.</p>
+                </div>
+
+                <div class="cv-highlight">
+                    <h3>Technical Expertise</h3>
+                    <p><strong>Programming:</strong> Python (Expert), SQL (Expert), R (Advanced)</p>
+                    <p><strong>Analytics:</strong> Machine Learning, Statistical Modeling, Econometrics, Time Series Analysis, Causal Inference</p>
+                    <p><strong>Business Intelligence:</strong> Tableau (Advanced), Power BI (Adept), Excel (Expert), automated dashboard development</p>
+                    <p><strong>Tools:</strong> SHAP, Git, Jupyter, ggplot2, matplotlib, Seaborn</p>
+                </div>
+
+                <div class="cv-highlight">
+                    <h3>Educational Credentials</h3>
+                    <p><strong>MA Economics</strong> - University of Missouri-St. Louis (2024)</p>
+                    <p><strong>Graduate Certificates:</strong> Data Science, Applied Econometrics, Artificial Intelligence</p>
+                    <p><strong>Teaching Experience:</strong> Graduate Teaching Assistant (Fall 2023 - Spring 2024)</p>
+                </div>
+            </div>
+
+            <div class="download-cv">
+                <a href="downloads/mark-attwood-resume.pdf" class="btn-download">
+                    📄 Download Complete Resume (PDF)
+                </a>
+            </div>
         </section>
         
-        <h2>Featured Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('images/gbm-framework.jpg'); background-color: #7E57C2;"></div>
-                <div class="project-content">
-                    <h3>GBM Framework Python Package</h3>
-                    <p>A unified framework for Gradient Boosting Models with automated hyperparameter tuning, SHAP analysis, and system optimization.</p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Machine Learning</span>
-                        <span class="tag">PyPI Package</span>
+        <!-- Projects Section - maintaining your existing structure -->
+        <section id="projects">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('images/gbm-framework.jpg'); background-color: #7E57C2;"></div>
+                    <div class="project-content">
+                        <h3>GBM Framework Python Package</h3>
+                        <p>A unified framework for Gradient Boosting Models with automated hyperparameter tuning, SHAP analysis, and system optimization.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">PyPI Package</span>
+                        </div>
+                        <a href="gbm-framework.html" class="view-project">View Project</a>
                     </div>
-                    <a href="gbm-framework.html" class="view-project">View Project</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('images/gnma-dashboard.jpg'); background-color: #42A5F5;"></div>
+                    <div class="project-content">
+                        <h3>GNMA Delinquency Dashboard</h3>
+                        <p>Interactive dashboard analyzing government-backed mortgage (GNMA) portfolio performance by state.</p>
+                        <div class="project-tags">
+                            <span class="tag">Tableau</span>
+                            <span class="tag">Financial Analysis</span>
+                            <span class="tag">Data Visualization</span>
+                        </div>
+                        <a href="gnma.html" class="view-project">View Project</a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('images/fleet-electrification.jpg'); background-color: #5C6BC0;"></div>
+                    <div class="project-content">
+                        <h3>Fleet Electrification Benefit-Cost Analysis</h3>
+                        <p>Comprehensive benefit-cost analysis of transitioning a municipal vehicle fleet from internal combustion engines to electric vehicles.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Cost-Benefit Analysis</span>
+                            <span class="tag">Sustainability</span>
+                        </div>
+                        <a href="fleet-cba.html" class="view-project">View Project</a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('images/benchmarking-project.jpg'); background-color: #42A5F5;"></div>
+                    <div class="project-content">
+                        <h3>Gradient Boosting Performance Analysis</h3>
+                        <p>Comprehensive performance evaluation of gradient boosting algorithms across several datasets using the GBM Framework.</p>
+                        <div class="project-tags">
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Performance Analysis</span>
+                            <span class="tag">Python</span>
+                        </div>
+                        <a href="benchmark-analysis.html" class="view-project">View Project</a>
+                    </div>
                 </div>
             </div>
-            
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('images/gnma-dashboard.jpg'); background-color: #42A5F5;"></div>
-                <div class="project-content">
-                    <h3>GNMA Delinquency Dashboard</h3>
-                    <p>Interactive dashboard analyzing government-backed mortgage (GNMA) portfolio performance by state.</p>
-                    <div class="project-tags">
-                        <span class="tag">Tableau</span>
-                        <span class="tag">Financial Analysis</span>
-                        <span class="tag">Data Visualization</span>
-                    </div>
-                    <a href="gnma.html" class="view-project">View Project</a>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('images/fleet-electrification.jpg'); background-color: #5C6BC0;"></div>
-                <div class="project-content">
-                    <h3>Fleet Electrification Benefit-Cost Analysis</h3>
-                    <p>Comprehensive benefit-cost analysis of transitioning a municipal vehicle fleet from internal combustion engines to electric vehicles.</p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Cost-Benefit Analysis</span>
-                        <span class="tag">Sustainability</span>
-                    </div>
-                    <a href="fleet-cba.html" class="view-project">View Project</a>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image" style="background-image: url('images/benchmarking-project.jpg'); background-color: #42A5F5;"></div>
-                <div class="project-content">
-                    <h3>Gradient Boosting Performance Analysis</h3>
-                    <p>Comprehensive performance evaluation of gradient boosting algorithms across several datasets using the GBM Framework.</p>
-                    <div class="project-tags">
-                        <span class="tag">Machine Learning</span>
-                        <span class="tag">Performance Analysis</span>
-                        <span class="tag">Python</span>
-                    </div>
-                    <a href="benchmark-analysis.html" class="view-project">View Project</a>
-                </div>
-            </div>
-        </div>
+        </section>
     </main>
     
+    <!-- Your existing footer -->
     <footer>
         <p>&copy; 2025 Mark Attwood Data Analytics</p>
     </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
