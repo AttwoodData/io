@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffeeshop Site Selection Analysis - Mark Attwood Data Analytics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            
+            /* Use this as a fallback if the background image fails to load */
+            background-color: #f5f5f5;
+
+            /* Add these lines for the fractal PNG */
+            background-image: url('images/wallpaper_tree.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+
+            /* If you want the background to stay in place while scrolling: */
+            background-attachment: fixed;
+        }
+        header {
+            background-color: white;
+            padding: 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        main {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .project-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h1, h2, h3 {
+            color: #333;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .project-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        
+        h2 {
+            font-size: 1.6rem;
+            border-bottom: 2px solid #5C8A3A;
+            padding-bottom: 0.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            color: #5C8A3A;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .highlight-box {
+            background-color: #f0f7ff;
+            border-left: 4px solid #5C8A3A;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+        
+        .download-section {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #5C8A3A 0%, #4A7A2A 100%);
+            border-radius: 8px;
+        }
+        
+        .download-btn {
+            background: white;
+            color: #5C8A3A;
+            padding: 12px 25px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .download-text {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Image Styles */
+        .figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+        
+        .figure-caption {
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        /* Results Table */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .results-table th,
+        .results-table td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        .results-table th {
+            background-color: #5C8A3A;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .results-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .results-table .winner {
+            background-color: #e8f5e8;
+            font-weight: bold;
+        }
+        
+        .results-table .runner-up {
+            background-color: #fff4e6;
+        }
+        
+        /* Code Section */
+        .code-section {
+            margin: 2rem 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            background: #5C8A3A;
+            color: white;
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .code-header:hover {
+            background: #4A7A2A;
+        }
+        
+        .code-toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        
+        .code-content {
+            display: none;
+            background: #f8f8f8;
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .code-content.expanded {
+            display: block;
+        }
+        
+        .code-content.expanded .code-toggle {
+            transform: rotate(180deg);
+        }
+        
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        /* Tools Used */
+        .tools-used {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .tool-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #5C8A3A;
+            text-align: center;
+        }
+        
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Key Findings */
+        .key-findings {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f9f0 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .finding-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .finding-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #5C8A3A;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            main {
+                padding: 0.5rem;
+            }
+            
+            .project-container {
+                padding: 1rem;
+            }
+            
+            .results-table {
+                font-size: 0.9rem;
+            }
+            
+            .tools-used {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="header-component.js"></script>
+</head>
+<body>
+    <div id="header-container"></div>
+    
+    <main>
+        <div class="project-container">
+            <h1>Coffeeshop Site Selection Using Geospatial Analysis</h1>
+            <p class="project-subtitle">A Simple Methodology Combining ArcGIS Pro Tools and Python Data Scraping</p>
+            
+            <div class="download-section">
+                <p class="download-text">View the complete academic paper with detailed methodology and references</p>
+                <a href="downloads/coffeeshop-site-selection-analysis.pdf" class="download-btn">
+                    📄 Download Full Paper (PDF)
+                </a>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>Project Overview:</strong> This analysis demonstrates a cost-effective methodology for optimizing business location selection using geospatial analysis, demographic data, and market gap identification. The approach combines ArcGIS Pro's spatial analysis capabilities with Python web scraping to identify optimal coffeeshop locations in the Saint Louis region.</p>
+            </div>
+
+            <h2>Business Challenge</h2>
+            <p>Our successful coffeeshop needed to select an additional location to grow the business with three key goals:</p>
+            <ul>
+                <li><strong>Increase profit and revenue</strong> through strategic location selection</li>
+                <li><strong>Expand brand presence</strong> in underserved markets</li>
+                <li><strong>Community-building</strong> by creating diverse, welcoming social environments</li>
+            </ul>
+            
+            <p>Traditional site selection relies on intuition or expensive consulting services. This project demonstrates how geospatial analysis can provide data-driven location decisions with minimal cost.</p>
+
+            <h2>Methodology & Tools Used</h2>
+            
+            <div class="tools-used">
+                <div class="tool-card">
+                    <div class="tool-icon">🗺️</div>
+                    <h4>ArcGIS Pro</h4>
+                    <p>Spatial analysis, service area calculation, demographic overlay</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🐍</div>
+                    <h4>Python</h4>
+                    <p>Yelp API scraping, data processing, competitor mapping</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <h4>Census Data</h4>
+                    <p>Demographics, spending patterns, age distribution analysis</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🎯</div>
+                    <h4>Market Analysis</h4>
+                    <p>Gap identification, service area modeling, site optimization</p>
+                </div>
+            </div>
+
+            <h3>Analytical Approach</h3>
+            <ol>
+                <li><strong>Competitor Mapping:</strong> Python scraping of Yelp API to identify all independent coffeeshops</li>
+                <li><strong>Service Area Analysis:</strong> 5-minute drive-time calculations using ArcGIS Pro</li>
+                <li><strong>Demographic Overlay:</strong> Census block-level age and spending data integration</li>
+                <li><strong>Gap Analysis:</strong> Market saturation mapping and opportunity identification</li>
+                <li><strong>Site Evaluation:</strong> Quantitative comparison of potential locations</li>
+            </ol>
+
+            <h2>Data Collection & Processing</h2>
+            
+            <p>The analysis began with comprehensive competitor mapping using Python to scrape the Yelp API, identifying every independent coffeeshop within a 50-mile radius of Saint Louis. This provided real-time business location data that traditional datasets lack.</p>
+            
+            <div class="figure">
+                <img src="images/figure1-coffeeshop-locations.png" alt="Independent coffeeshop locations in Saint Louis region">
+                <p class="figure-caption">Figure 1: Locations of Independent Coffeeshops in the Saint Louis Region</p>
+            </div>
+
+            <h3>Demographic Data Integration</h3>
+            <p>Using ArcGIS Pro's enrich feature, we integrated Census block group data focusing on two key demographic variables:</p>
+            <ul>
+                <li><strong>Median Age:</strong> Target demographic of 35-40 years (observed customer base median)</li>
+                <li><strong>Breakfast-Out Spending:</strong> Normalized by area to create spending density measures</li>
+            </ul>
+
+            <div class="figure">
+                <img src="images/figure2-median-age.png" alt="Median age distribution by census block">
+                <p class="figure-caption">Figure 2: Median Age Within Census Block Groups</p>
+            </div>
+
+            <div class="figure">
+                <img src="images/figure3-breakfast-spending.png" alt="Breakfast spending density by area">
+                <p class="figure-caption">Figure 3: Spending on Breakfast-Out Per Square Mile Within Census Block Groups</p>
+            </div>
+
+            <h2>Spatial Analysis Process</h2>
+
+            <h3>Service Area Modeling</h3>
+            <p>Based on consumer research showing customers travel no more than 6 minutes for regular small purchases, we defined service areas using 5-minute drive-time radii. This accounts for Saint Louis's car-dependent transportation patterns.</p>
+
+            <div class="figure">
+                <img src="images/figure4-market-coverage.png" alt="Service area coverage overlaid on spending data">
+                <p class="figure-caption">Figure 4: Independent Coffeeshop Market Coverage Overlaid on Breakfast-Out Expenses</p>
+            </div>
+
+            <h3>Market Saturation Analysis</h3>
+            <p>Using ArcGIS Pro's Count Overlapping Features tool, we identified market saturation levels and gaps in service coverage, revealing clear opportunities for new locations.</p>
+
+            <div class="figure">
+                <img src="images/figure5-market-saturation.png" alt="Market saturation analysis with gaps identified">
+                <p class="figure-caption">Figure 5: Independent Coffeeshop Market Saturation Overlaid on Breakfast-Out Expenses</p>
+            </div>
+
+            <h2>Site Selection & Results</h2>
+
+            <p>Six potential sites were identified through visual inspection of areas with:</p>
+            <ul>
+                <li>High breakfast-out spending density</li>
+                <li>Target age demographics (35-40 years median)</li>
+                <li>Service gaps in competitor coverage</li>
+                <li>Good thoroughfare access for visibility</li>
+            </ul>
+
+            <div class="figure">
+                <img src="images/figure6-potential-sites-breakfast.png" alt="Potential sites overlaid on breakfast spending">
+                <p class="figure-caption">Figure 6: Service Areas of Potential Sites Over Breakfast-Out Spending</p>
+            </div>
+
+            <div class="figure">
+                <img src="images/figure7-potential-sites-competitors.png" alt="Potential sites against competitor coverage">
+                <p class="figure-caption">Figure 7: Service Areas of Potential Sites Against Competitor Service Areas</p>
+            </div>
+
+            <h3>Quantitative Site Comparison</h3>
+            <p>Using ArcGIS Pro's enrich tool on the potential service areas, we calculated precise demographic and market values for each site:</p>
+
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Site Location</th>
+                        <th>Median Age</th>
+                        <th>Breakfast-Out Spending</th>
+                        <th>Market Assessment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="winner">
+                        <td>Warson Woods</td>
+                        <td>43</td>
+                        <td>$4,990,433</td>
+                        <td>Clear front-runner with highest market potential</td>
+                    </tr>
+                    <tr class="runner-up">
+                        <td>Valley Park</td>
+                        <td>40</td>
+                        <td>$3,690,201</td>
+                        <td>Ideal age demographic, strong market value</td>
+                    </tr>
+                    <tr>
+                        <td>Creve Coeur</td>
+                        <td>46</td>
+                        <td>$3,128,031</td>
+                        <td>Good market size, slightly older demographic</td>
+                    </tr>
+                    <tr>
+                        <td>Mehlville</td>
+                        <td>43</td>
+                        <td>$2,825,672</td>
+                        <td>Moderate potential</td>
+                    </tr>
+                    <tr>
+                        <td>Florissant</td>
+                        <td>39</td>
+                        <td>$2,501,145</td>
+                        <td>Excellent age match, moderate spending</td>
+                    </tr>
+                    <tr>
+                        <td>Chesterfield</td>
+                        <td>54</td>
+                        <td>$1,008,338</td>
+                        <td>Demographics too old for target market</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="figure">
+                <img src="images/figure8-site-demographics.png" alt="Age demographics for potential sites">
+                <p class="figure-caption">Figure 8: Median Age Within Potential Site Market Areas</p>
+            </div>
+
+            <div class="figure">
+                <img src="images/figure9-final-analysis.png" alt="Final site analysis with recommendations">
+                <p class="figure-caption">Figure 9: Spending on Breakfast-Out Within Potential Site Market Areas</p>
+            </div>
+
+            <div class="key-findings">
+                <h3>Key Findings</h3>
+                <div class="findings-grid">
+                    <div class="finding-item">
+                        <div class="finding-number">$4.99M</div>
+                        <p><strong>Warson Woods</strong> market potential - nearly 5x higher than lowest option</p>
+                    </div>
+                    <div class="finding-item">
+                        <div class="finding-number">5 min</div>
+                        <p><strong>Drive-time radius</strong> based on consumer research for optimal service areas</p>
+                    </div>
+                    <div class="finding-item">
+                        <div class="finding-number">324</div>
+                        <p><strong>Competitor locations</strong> mapped and analyzed for market gaps</p>
+                    </div>
+                    <div class="finding-item">
+                        <div class="finding-number">35-40</div>
+                        <p><strong>Target age range</strong> identified through customer base analysis</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Business Impact & Conclusions</h2>
+            
+            <p>This methodology provides a <strong>much higher success rate than arbitrary location selection</strong> at relatively low cost. The analysis revealed:</p>
+            
+            <ul>
+                <li><strong>Clear winner:</strong> Warson Woods offers the highest market potential despite slightly older demographics</li>
+                <li><strong>Backup option:</strong> Valley Park provides ideal age demographics with strong market value</li>
+                <li><strong>Quantifiable decisions:</strong> Data-driven selection removes guesswork from expansion planning</li>
+                <li><strong>Scalable approach:</strong> Methodology can be applied to any retail location decision</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>Future Enhancements:</strong> The model could be improved with customer-level data on residence and work locations, transit path mapping, and more sophisticated market area calculations. However, even this simplified approach demonstrates the power of combining geospatial analysis with web scraping for business intelligence.</p>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header" onclick="toggleCode()">
+                    <span>🐍 Python Code Implementation</span>
+                    <span class="code-toggle" id="toggle-icon">▼</span>
+                </div>
+                <div class="code-content" id="code-content">
+                    <h4>Yelp API Data Collection Script</h4>
+                    <p>Complete Python implementation for scraping competitor location data:</p>
+                    <pre><code>import requests
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from YelpAPIKey import get_key
+from copy import deepcopy
+
+# Configure pandas display
+pd.options.display.max_columns = 2000
+
+# Define API Key, Endpoint, and Headers
+API_KEY = get_key()
+ENDPOINT = 'https://api.yelp.com/v3/businesses/search'
+HEADERS = {'Authorization': f'bearer {API_KEY}'}
+
+# Define search parameters
+PARAMETERS = {
+    'term': 'coffee',
+    'limit': 50,
+    'offset': 400,
+    'location': 'Saint Louis'
+}
+
+# Collect all businesses with pagination
+businesses = []
+for offset in np.arange(0, 1000, 50):
+    PARAMS = {
+        'term': 'coffee',
+        'limit': 50,
+        'offset': offset,
+        'location': 'Saint Louis'
+    }
+    response = requests.get(url=ENDPOINT, params=PARAMS, headers=HEADERS)
+    data = response.json()
+    
+    for item in data.get('businesses'):
+        businesses.append(item)
+
+# Process categories (maximum 3 per business)
+for business in businesses:
+    if len(business.get('categories')) == 3:
+        business["cat_1"] = business.get('categories')[0].get('alias')
+        business["cat_2"] = business.get('categories')[1].get('alias')
+        business["cat_3"] = business.get('categories')[2].get('alias')
+    elif len(business.get('categories')) == 2:
+        business["cat_1"] = business.get('categories')[0].get('alias')
+        business["cat_2"] = business.get('categories')[1].get('alias')
+        business["cat_3"] = 'None'
+    else:  # length == 1
+        business["cat_1"] = business.get('categories')[0].get('alias')
+        business["cat_2"] = 'None'
+        business["cat_3"] = 'None'
+
+# Extract location and coordinate data
+for business in businesses:
+    business["street_address"] = business.get("location").get("address1")
+    business["zip_code"] = business.get("location").get("zip_code")
+    business['latitude'] = business.get('coordinates').get('latitude')
+    business['longitude'] = business.get('coordinates').get('longitude')
+
+# Convert to DataFrame and clean data
+df = pd.DataFrame.from_dict(businesses)
+
+# Remove unnecessary columns
+drop_columns = [
+    'id', 'alias', 'image_url', 'url', 'categories', 
+    'coordinates', 'transactions', 'location', 
+    'phone', 'display_phone', 'is_closed'
+]
+df.drop(labels=drop_columns, axis=1, inplace=True)
+
+# Filter for coffee-related businesses
+df_coffee = df.loc[
+    (df["cat_1"].str.match('coffee')) |
+    (df["cat_2"].str.match('coffee')) |
+    (df["cat_3"].str.match('coffee'))
+]
+
+# Remove chain competitors (focus on independent shops)
+df_coffee = df_coffee[df_coffee['name'] != "McDonald's"]
+df_coffee = df_coffee[df_coffee['name'] != "7-Eleven"]
+df_coffee = df_coffee[df_coffee['name'] != "Dunkin'"]
+
+# Create cost categories from price indicators
+df_coffee["cost"] = np.where(df_coffee["price"] == "$", 1,
+                   np.where(df_coffee["price"] == "$$", 2,
+                   np.where(df_coffee["price"] == "$$$", 3, np.nan)))
+
+# Export cleaned data for ArcGIS Pro import
+df_coffee.to_csv("yelp_stl_coffee_data.csv", index=False)
+
+print(f"Data collection complete: {len(df_coffee)} independent coffeeshops identified")
+print(f"Average rating: {df_coffee['rating'].mean():.2f}")
+print(f"Price distribution: {df_coffee['cost'].value_counts().to_dict()}")
+</code></pre>
+                    
+                    <h4>Data Processing Summary</h4>
+                    <p>The script processes Yelp API responses to:</p>
+                    <ul>
+                        <li>Handle pagination to collect comprehensive competitor data</li>
+                        <li>Parse business categories and extract coffee-related establishments</li>
+                        <li>Clean and standardize location data for GIS import</li>
+                        <li>Filter out chain competitors to focus on independent coffeeshops</li>
+                        <li>Create cost classifications for market analysis</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Technical Skills Demonstrated</h2>
+            
+            <div class="tools-used">
+                <div class="tool-card">
+                    <h4>Geospatial Analysis</h4>
+                    <p>Service area modeling, spatial overlay analysis, market gap identification</p>
+                </div>
+                <div class="tool-card">
+                    <h4>Data Integration</h4>
+                    <p>Census demographics, commercial APIs, spatial data joining</p>
+                </div>
+                <div class="tool-card">
+                    <h4>Business Intelligence</h4>
+                    <p>Market analysis, competitor research, site optimization</p>
+                </div>
+                <div class="tool-card">
+                    <h4>Programming</h4>
+                    <p>Python web scraping, API integration, data processing pipelines</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Mark Attwood Data Analytics</p>
+    </footer>
+
+    <script>
+        function toggleCode() {
+            const content = document.getElementById('code-content');
+            const icon = document.getElementById('toggle-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▼';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▲';
+            }
+        }
+    </script>
+</body>
+</html>
