@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MU Behavior Club - Professional Poster</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Gotham', 'Montserrat', 'Arial', sans-serif;
+            background-color: #ffffff;
+            width: 1728px;
+            height: 2592px;
+            margin: 0 auto;
+            position: relative;
+            print-color-adjust: exact;
+        }
+
+        .poster-container {
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 500px;
+            height: 150px;
+            margin: 0 auto 25px auto;
+            object-fit: contain;
+        }
+
+        .main-title {
+            font-size: 120px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 48px;
+            color: #F1B82D;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .university {
+            font-size: 36px;
+            color: #333333;
+            margin-bottom: 30px;
+        }
+
+        .certifications {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .cert-logo {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .cert-logo.avsab {
+            height: 50px;
+        }
+
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex-grow: 1;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            flex-grow: 1;
+        }
+
+        .single-asset {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .behavioral-cues-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            flex-grow: 1;
+        }
+
+        /* Section Styling */
+        .section {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid #F1B82D;
+            margin-bottom: 25px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #F1B82D;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* Asset Grid Layouts */
+        .asset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .single-asset {
+            display: flex;
+            justify-content: center;
+        }
+
+        .body-language-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .asset-item {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .asset-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333333;
+            margin-top: 15px;
+            line-height: 1.3;
+        }
+
+        /* Infographic Images - Flexible sizing for different file sizes */
+        .behavior-infographic {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            min-height: 200px;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: white;
+            flex-grow: 1;
+        }
+
+        /* Photo Grid Images - Flexible sizing */
+        .activity-photo {
+            width: 100%;
+            height: auto;
+            min-height: 120px;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: white;
+            flex-grow: 1;
+        }
+
+        /* Statistics Section */
+        .stats-section {
+            background-color: #333333;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stats-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #F1B82D;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #F1B82D;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: white;
+            margin-top: 5px;
+        }
+
+        /* Statistics Section */
+        .stats-section {
+            background-color: #333333;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stats-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #F1B82D;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #F1B82D;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: white;
+            margin-top: 5px;
+        }
+
+        /* Photo Placeholders */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #F1B82D;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .contact-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        /* Decorative Elements */
+        .paw-print {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            opacity: 0.1;
+            color: #F1B82D;
+        }
+
+        .paw-1 { top: 200px; left: 100px; }
+        .paw-2 { top: 800px; right: 80px; }
+        .paw-3 { bottom: 300px; left: 150px; }
+        .paw-4 { bottom: 600px; right: 120px; }
+
+        @media print {
+            body { 
+                width: 36in; 
+                height: 24in; 
+                margin: 0;
+            }
+            .poster-container {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <!-- Decorative paw prints -->
+        <div class="paw-print paw-1">🐾</div>
+        <div class="paw-print paw-2">🐾</div>
+        <div class="paw-print paw-3">🐾</div>
+        <div class="paw-print paw-4">🐾</div>
+
+        <!-- Header Section -->
+        <header class="header">
+            <img src="MU_logo.png" alt="University of Missouri College of Veterinary Medicine Logo" class="logo">
+            
+            <h1 class="main-title">ANIMAL BEHAVIOR CLUB</h1>
+            
+            <div class="certifications">
+                <img src="AVSAB.png" alt="AVSAB Member" class="cert-logo avsab">
+                <img src="fear_free.png" alt="Fear Free Certified" class="cert-logo">
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="content-grid">
+            <div class="left-column">
+                <!-- Events -->
+                <section class="section" style="flex: 1.4;">
+                    <h2 class="section-title">Events</h2>
+                    <div class="events-grid">
+                        <div class="asset-item">
+                            <img src="k9_handling.png" alt="K-9 Handling" class="activity-photo">
+                            <p class="asset-label">K-9 Handling</p>
+                        </div>
+                        <div class="asset-item">
+                            <img src="reptile_handling.png" alt="Reptile Handling" class="activity-photo">
+                            <p class="asset-label">Reptile Handling</p>
+                        </div>
+                        <div class="asset-item">
+                            <img src="mule_handling.png" alt="Mule Handling" class="activity-photo">
+                            <p class="asset-label">Mule Handling</p>
+                        </div>
+                        <div class="asset-item">
+                            <img src="emotional_support_animal.png" alt="Emotional Support Animal Work" class="activity-photo">
+                            <p class="asset-label">Emotional Support Animal Work</p>
+                        </div>
+                        <div class="asset-item">
+                            <img src="dog_socialization.png" alt="Dog Socialization" class="activity-photo">
+                            <p class="asset-label">Dog Socialization</p>
+                        </div>
+                        <div class="asset-item">
+                            <img src="enrichment.png" alt="Animal Enrichment" class="activity-photo">
+                            <p class="asset-label">Enrichment for Lab, Shelter, and Zoo Animals</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- QR Code Section -->
+                <section class="section" style="flex: 0.4;">
+                    <h2 class="section-title">Scan Here ↓</h2>
+                    <div class="reserved-content">
+                        <div class="placeholder-box">
+                            <p class="placeholder-text">QR Code<br>coming soon...</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="right-column">
+                <!-- Behavioral Cues in the Exam Room -->
+                <section class="section" style="flex: 1;">
+                    <h2 class="section-title">Behavioral Cues in the Exam Room</h2>
+                    <div class="behavioral-cues-grid">
+                        <div class="asset-item">
+                            <img src="stress_scale.png" alt="Fear, Anxiety, Stress Scale" class="behavior-infographic">
+                            <p class="asset-label">FAS Scale Assessment Tool</p>
+                        </div>
+                        <div class="asset-item">
+                            <img src="dog_language.png" alt="Dog Body Language Guide" class="behavior-infographic">
+                            <p class="asset-label">Canine Body Language</p>
+                        </div>
+                        <div class="asset-item">
+                            <img src="cat_language.png" alt="Cat Body Language Guide" class="behavior-infographic">
+                            <p class="asset-label">Feline Body Language</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
