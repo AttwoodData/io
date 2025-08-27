@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Missouri Employee Tools – Health Plan & Compensation</title>
+
+  <!-- Dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+  <!-- Metropolis font (open-source Gotham alternative) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/metropolis@latest/index.css">
+  <style>
+    body {
+      font-family: 'Metropolis', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+  </style>
+
+  <style>
+    /* Page shell & nav */
+    :root {
+      --brand-blue: #1e3a8a;
+      --brand-gold: #f59e0b;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8fafc;
+      margin: 0;
+      color: #0f172a;
+    }
+    .shell {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .app-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+    .topbar {
+      background: linear-gradient(135deg, var(--brand-blue) 0%, #4338ca 100%);
+      color: white;
+      padding: 20px 16px;
+    }
+    .topbar h1 {
+      font-size: 1.5rem;
+      margin: 0 0 6px 0;
+      letter-spacing: 0.5px;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      background: #f1f5f9;
+      border-bottom: 1px solid #e5e7eb;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      appearance: none;
+      border: 1px solid #cbd5e1;
+      background: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 600;
+      color: #0f172a;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+    .tab-btn[aria-selected="true"] {
+      background: #0ea5e9;
+      color: white;
+      border-color: #0284c7;
+      box-shadow: 0 10px 20px -10px #0284c7;
+    }
+    .tab-panel {
+      display: none;
+    }
+    .tab-panel[aria-hidden="false"] {
+      display: block;
+    }
+
+    /* -------- MCHCP Health Plan Calculator styles (slightly namespaced) -------- */
+    .mchcp-wrapper .container { /* inherits original layout */
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .mchcp-wrapper .header {
+      background: linear-gradient(135deg, #2563eb 0%, #4338ca 100%);
+      color: white;
+      padding: 32px;
+    }
+    .mchcp-wrapper .header h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .mchcp-wrapper .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding: 32px;
+    }
+    .mchcp-wrapper .config-panel {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .mchcp-wrapper .config-title { font-size: 1.25rem; font-weight: 600; color: #374151; margin-bottom: 24px; }
+    .mchcp-wrapper .form-group { margin-bottom: 24px; }
+    .mchcp-wrapper .form-label { display:block; font-size: .875rem; font-weight: 500; color:#374151; margin-bottom:8px; }
+    .mchcp-wrapper .form-select, .mchcp-wrapper .form-input {
+      width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:1rem; background:white;
+    }
+    .mchcp-wrapper .form-input { padding:16px; font-size:1.125rem; }
+    .mchcp-wrapper .form-select:focus, .mchcp-wrapper .form-input:focus { outline:none; border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,.1); }
+    .mchcp-wrapper .checkbox-group { display:flex; align-items:center; margin-bottom:16px; }
+    .mchcp-wrapper .checkbox-group input[type="checkbox"] { width:16px; height:16px; margin-right:8px; }
+    .mchcp-wrapper .helper-text { font-size:.75rem; color:#6b7280; margin-top:4px; }
+    .mchcp-wrapper .chart-container { background:white; border:1px solid #e5e7eb; border-radius:12px; padding:24px; margin-bottom:24px; }
+    .mchcp-wrapper .chart-title { font-size:1.25rem; font-weight:600; color:#374151; margin-bottom:16px; }
+    .mchcp-wrapper .chart-wrapper { position:relative; height:400px; margin-bottom:16px; }
+    .mchcp-wrapper .chart-info { background:#f3f4f6; border-radius:8px; padding:16px; font-size:.875rem; color:#6b7280; }
+    .mchcp-wrapper .current-expenditure { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .mchcp-wrapper .expenditure-line { width:16px; height:2px; background:#ef4444; }
+    .mchcp-wrapper .expenditure-input { padding:24px; font-size:2rem; font-weight:bold; text-align:center; border:2px solid #d1d5db; border-radius:12px; background:white; width:100%; margin-bottom:24px; }
+    .mchcp-wrapper .expenditure-input:focus { outline:none; border-color:#3b82f6; box-shadow:0 0 0 4px rgba(59,130,246,.1); }
+    .mchcp-wrapper .expenditure-label { font-size:1.5rem; font-weight:bold; color:#374151; margin-bottom:16px; display:block; }
+    .mchcp-wrapper .section-title { font-size:1.75rem; font-weight:bold; color:#374151; margin:32px 0 24px 0; display:flex; align-items:center; gap:8px; }
+    .mchcp-wrapper .plan-cards { display:flex; flex-direction:column; gap:16px; }
+    .mchcp-wrapper .plan-card { padding:16px; border-radius:8px; border:2px solid #e5e7eb; background:white; }
+    .mchcp-wrapper .plan-card.best { border-color:#10b981; background:#f0fdf4; }
+    .mchcp-wrapper .plan-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+    .mchcp-wrapper .plan-name { font-weight:600; color:#374151; }
+    .mchcp-wrapper .best-badge { background:#10b981; color:white; font-size:.75rem; padding:4px 8px; border-radius:12px; }
+    .mchcp-wrapper .plan-details { font-size:.875rem; color:#6b7280; margin-bottom:8px; }
+    .mchcp-wrapper .plan-details > div { margin-bottom:4px; }
+    .mchcp-wrapper .hsa-contribution { color:#10b981; }
+    .mchcp-wrapper .total-cost { padding-top:8px; border-top:1px solid #e5e7eb; font-weight:bold; font-size:1.125rem; }
+    .mchcp-wrapper .total-cost.negative { color:#10b981; }
+    .mchcp-wrapper .info-box { background:#dbeafe; border:1px solid #bfdbfe; border-radius:12px; padding:24px; margin-top:24px; }
+    .mchcp-wrapper .info-title { font-weight:600; color:#1e40af; margin-bottom:8px; }
+    .mchcp-wrapper .info-list { font-size:.875rem; color:#1e40af; line-height:1.5; }
+    @media (max-width: 1024px) {
+      .mchcp-wrapper .config-panel { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <!-- Strong override to ensure Metropolis is applied site-wide -->
+  <style>
+    html, body, .shell, .app-card, .mchcp-wrapper, #comp-root, #panel-health, #panel-comp, .tabs, .tab-btn {
+      font-family: 'Metropolis', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+    h1, h2, h3, h4, .section-title, .chart-title, .config-title {
+      font-weight: 700;
+    }
+    .tab-btn { font-weight: 600; }
+  </style>
+
+</head>
+<body>
+  <div class="shell">
+    <div class="app-card">
+      <div class="topbar">
+        <h1>Missouri Employee Tools</h1>
+        <div class="opacity-80">Health Plan Cost Calculator & Total Compensation Calculator</div>
+      </div>
+
+      <!-- Tabs -->
+      <div role="tablist" aria-label="Tools" class="tabs">
+        <button id="tab-health" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-health">🧮 Health Plan Calculator</button>
+        <button id="tab-comp" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-comp">💼 Compensation Calculator</button>
+      </div>
+
+      <!-- Panels -->
+      <section id="panel-health" role="tabpanel" class="tab-panel" aria-hidden="false">
+        <div class="mchcp-wrapper">
+          <!-- == MCHCP Health Plan Calculator == -->
+          <div class="container">
+            <div class="header">
+              <h1>🧮 MCHCP Health Plan Calculator</h1>
+              <p>2025 Missouri State Employee Plans</p>
+            </div>
+
+            <div class="main-content">
+              <div class="config-panel">
+                <div class="config-section">
+                  <h2 class="config-title">👥 Plan Configuration</h2>
+
+                  <div class="form-group">
+                    <label class="form-label">Coverage Level</label>
+                    <select id="coverage" class="form-select">
+                      <option value="employee">Employee Only</option>
+                      <option value="employee_spouse">Employee + Spouse</option>
+                      <option value="employee_child">Employee + Child</option>
+                      <option value="employee_children">Employee + Children</option>
+                      <option value="employee_spouse_child">Employee + Spouse + Child</option>
+                      <option value="employee_spouse_children">Employee + Spouse + Children</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="checkbox-group">
+                      <input type="checkbox" id="partnership" checked>
+                      <label for="partnership">Partnership Incentive (-$25/month)</label>
+                    </div>
+                    <div class="checkbox-group">
+                      <input type="checkbox" id="tobaccoFree" checked>
+                      <label for="tobaccoFree">Tobacco-Free Incentive (up to -$80/month)</label>
+                    </div>
+                    <p class="helper-text">Toggle incentives to see your monthly premium impact.</p>
+                  </div>
+                </div>
+
+                <!-- Line Chart -->
+                <div class="chart-container">
+                  <h3 class="chart-title">📈 Total Cost vs Expected Expenditure</h3>
+                  <div class="chart-wrapper"><canvas id="lineChart"></canvas></div>
+                  <div class="chart-info">
+                    <div class="current-expenditure">
+                      <div class="expenditure-line"></div>
+                      <span>Current expenditure: $<span id="currentExp">2050</span></span>
+                    </div>
+                    <p>The chart shows how total annual costs change with different levels of medical spending. Negative costs for HSA Plan indicate net benefit from employer contribution.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 class="section-title">💰 How much will my plan cost per year?</h2>
+                <label class="expenditure-label">Expected Annual In-Network Expenditure</label>
+                <input type="text" id="expenditure" class="expenditure-input" value="$2,050" min="0" max="40000" step="100" placeholder="Enter amount (e.g., 2050)">
+                <div class="helper-text" style="text-align:center; margin-top:-16px; margin-bottom:32px;">Includes medical services and prescription drugs</div>
+
+                <div class="chart-container">
+                  <h3 class="chart-title">💵 Annual Cost Breakdown</h3>
+                  <div class="chart-wrapper"><canvas id="barChart"></canvas></div>
+                </div>
+
+                <h2 class="section-title">👥 Which plan is the best value?</h2>
+                <div class="plan-cards" id="planCards"></div>
+
+                <div class="info-box">
+                  <h4 class="info-title">ℹ️ Important Notes</h4>
+                  <div class="info-list">
+                    • Calculations assume all care is in-network<br>
+                    • HSA Plan includes employer contribution of $500 (individual) or $1,000 (family)<br>
+                    • Preventive services are covered at 100% for all plans<br>
+                    • Actual costs may vary based on specific services utilized<br>
+                    • Tobacco-free incentive assumes all covered members are tobacco-free<br>
+                    • Default expenditure values represent median out-of-pocket spending from MEPS 2021 data, adjusted for medical inflation using BLS CPI Medical Care Index
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /MCHCP -->
+        </div>
+      </section>
+
+      <section id="panel-comp" role="tabpanel" class="tab-panel" aria-hidden="true">
+        <!-- == React Compensation Calculator == -->
+        <div id="comp-root"></div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // Simple tabs
+    const tabHealth = document.getElementById('tab-health');
+    const tabComp = document.getElementById('tab-comp');
+    const panelHealth = document.getElementById('panel-health');
+    const panelComp = document.getElementById('panel-comp');
+
+    function selectTab(which) {
+      const isHealth = which === 'health';
+      tabHealth.setAttribute('aria-selected', isHealth ? 'true' : 'false');
+      tabComp.setAttribute('aria-selected', !isHealth ? 'true' : 'false');
+      panelHealth.setAttribute('aria-hidden', isHealth ? 'false' : 'true');
+      panelComp.setAttribute('aria-hidden', !isHealth ? 'false' : 'true');
+    }
+    tabHealth.addEventListener('click', () => selectTab('health'));
+    tabComp.addEventListener('click', () => selectTab('comp'));
+  </script>
+
+  <!-- ======================== HEALTH PLAN CALCULATOR LOGIC ======================== -->
+  <script>
+    // Premium data
+    const premiumData = {
+      HSA: {
+        'employee': { partnership: 0, standard: 25 },
+        'employee_spouse': { partnership: 77, standard: 102 },
+        'employee_child': { partnership: 13, standard: 38 },
+        'employee_children': { partnership: 19, standard: 44 },
+        'employee_spouse_child': { partnership: 90, standard: 115 },
+        'employee_spouse_children': { partnership: 96, standard: 121 }
+      },
+      PPO1250: {
+        'employee': { partnership: 42, standard: 67 },
+        'employee_spouse': { partnership: 244, standard: 269 },
+        'employee_child': { partnership: 70, standard: 95 },
+        'employee_children': { partnership: 90, standard: 115 },
+        'employee_spouse_child': { partnership: 272, standard: 297 },
+        'employee_spouse_children': { partnership: 292, standard: 317 }
+      },
+      PPO750: {
+        'employee': { partnership: 72, standard: 97 },
+        'employee_spouse': { partnership: 324, standard: 349 },
+        'employee_child': { partnership: 114, standard: 139 },
+        'employee_children': { partnership: 145, standard: 170 },
+        'employee_spouse_child': { partnership: 365, standard: 390 },
+        'employee_spouse_children': { partnership: 397, standard: 422 }
+      }
+    };
+
+    // Plan details
+    const planDetails = {
+      HSA: {
+        deductible: { individual: 1650, family: 3300 },
+        oopMax: { individual: 4950, family: 9900 },
+        coinsurance: 0.2,
+        employerContribution: { individual: 500, family: 1000 }
+      },
+      PPO1250: {
+        deductible: { individual: 1250, family: 2500 },
+        oopMax: { individual: 3750, family: 7500 },
+        coinsurance: 0.2,
+        employerContribution: { individual: 0, family: 0 }
+      },
+      PPO750: {
+        deductible: { individual: 750, family: 1500 },
+        oopMax: { individual: 2250, family: 4500 },
+        coinsurance: 0.2,
+        employerContribution: { individual: 0, family: 0 }
+      }
+    };
+
+    // Median expenditure defaults
+    const medianExpenditures = {
+      'employee': 2050,
+      'employee_spouse': 3650,
+      'employee_child': 3200,
+      'employee_children': 4000,
+      'employee_spouse_child': 4800,
+      'employee_spouse_children': 5500
+    };
+
+    let lineChart = null;
+    let barChart = null;
+
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(value);
+    }
+
+    function parseExpenditureValue() {
+      const input = document.getElementById('expenditure');
+      return parseInt(input.value.replace(/[$,]/g, '')) || 0;
+    }
+
+    function calculateCostsForExpenditure(expenditure) {
+      const coverage = document.getElementById('coverage').value;
+      const partnership = document.getElementById('partnership').checked;
+      const tobaccoFree = document.getElementById('tobaccoFree').checked;
+
+      const results = [];
+
+      Object.keys(planDetails).forEach(planName => {
+        const plan = planDetails[planName];
+        const premiumType = partnership ? 'partnership' : 'standard';
+        let monthlyPremium = premiumData[planName][coverage][premiumType];
+
+        // Apply surcharge if NOT tobacco-free
+        if (!tobaccoFree) {
+          if (coverage.includes('spouse')) {
+            monthlyPremium += 80;
+          } else {
+            monthlyPremium += 40;
+          }
+        }
+
+        monthlyPremium = Math.max(0, monthlyPremium);
+        const annualPremium = monthlyPremium * 12;
+
+        // Calculate deductible logic
+        const isFamily = coverage !== 'employee';
+        let applicableDeductible;
+
+        if (planName === 'HSA') {
+          applicableDeductible = isFamily ? plan.deductible.family : plan.deductible.individual;
+        } else {
+          applicableDeductible = plan.deductible.individual;
+        }
+
+        const oopMax = isFamily ? plan.oopMax.family : plan.oopMax.individual;
+
+        let estimatedOOP = 0;
+        if (expenditure > 0) {
+          if (expenditure <= applicableDeductible) {
+            estimatedOOP = expenditure;
+          } else {
+            const afterDeductible = expenditure - applicableDeductible;
+            const coinsuranceAmount = afterDeductible * plan.coinsurance;
+            estimatedOOP = Math.min(applicableDeductible + coinsuranceAmount, oopMax);
+          }
+        }
+
+        const hsaContribution = planName === 'HSA' ?
+          (isFamily ? plan.employerContribution.family : plan.employerContribution.individual) : 0;
+
+        const totalAnnualCost = annualPremium + estimatedOOP - hsaContribution;
+
+        results.push({
+          plan: planName === 'HSA' ? 'HSA Plan' : planName === 'PPO1250' ? 'PPO 1250' : 'PPO 750',
+          planCode: planName,
+          monthlyPremium: monthlyPremium,
+          annualPremium: annualPremium,
+          deductible: applicableDeductible,
+          oopMax: oopMax,
+          estimatedOOP: Math.round(estimatedOOP),
+          hsaContribution: hsaContribution,
+          totalCost: Math.round(totalAnnualCost)
+        });
+      });
+
+      return results.sort((a, b) => a.totalCost - b.totalCost);
+    }
+
+    function generateLineChartData() {
+      const labels = [];
+      const hsaData = [];
+      const ppo1250Data = [];
+      const ppo750Data = [];
+
+      for (let expenditure = 0; expenditure <= 40000; expenditure += 1000) {
+        const costs = calculateCostsForExpenditure(expenditure);
+        labels.push(expenditure);
+
+        costs.forEach(cost => {
+          if (cost.planCode === 'HSA') hsaData.push(cost.totalCost);
+          else if (cost.planCode === 'PPO1250') ppo1250Data.push(cost.totalCost);
+          else if (cost.planCode === 'PPO750') ppo750Data.push(cost.totalCost);
+        });
+      }
+
+      return { labels, hsaData, ppo1250Data, ppo750Data };
+    }
+
+    function updateCharts() {
+      const expenditure = parseExpenditureValue();
+      document.getElementById('currentExp').textContent = expenditure;
+
+      // Line chart
+      const lineData = generateLineChartData();
+      if (lineChart) lineChart.destroy();
+      const lineCtx = document.getElementById('lineChart').getContext('2d');
+      lineChart = new Chart(lineCtx, {
+        type: 'line',
+        data: {
+          labels: lineData.labels.map(l => '$' + l),
+          datasets: [
+            { label: 'HSA Plan', data: lineData.hsaData, borderColor: '#10B981', backgroundColor: 'transparent', tension: 0.1 },
+            { label: 'PPO 1250', data: lineData.ppo1250Data, borderColor: '#3B82F6', backgroundColor: 'transparent', tension: 0.1 },
+            { label: 'PPO 750', data: lineData.ppo750Data, borderColor: '#EF4444', backgroundColor: 'transparent', tension: 0.1 }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          scales: { x: { title: { display:true, text:'Expected In-Network Expenditure' } },
+                    y: { title: { display:true, text:'Total Annual Cost' },
+                         ticks: { callback: v => '$' + v } } },
+          plugins: { tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: $${ctx.parsed.y}` } } }
+        }
+      });
+
+      // Bar chart
+      const costs = calculateCostsForExpenditure(expenditure);
+      if (barChart) barChart.destroy();
+      const barCtx = document.getElementById('barChart').getContext('2d');
+      barChart = new Chart(barCtx, {
+        type: 'bar',
+        data: {
+          labels: costs.map(c => c.plan),
+          datasets: [
+            {
+              label: 'Annual Premium',
+              data: costs.map(c => c.annualPremium),
+              backgroundColor: 'rgba(59, 130, 246, 0.7)',
+              borderColor: '#3B82F6',
+              borderWidth: 1
+            },
+            {
+              label: 'Est. Out-of-Pocket',
+              data: costs.map(c => c.estimatedOOP),
+              backgroundColor: 'rgba(245, 158, 11, 0.7)',
+              borderColor: '#F59E0B',
+              borderWidth: 1
+            },
+            {
+              label: 'HSA Contribution (state-paid, subtract)',
+              data: costs.map(c => -c.hsaContribution),
+              backgroundColor: 'rgba(16, 185, 129, 0.6)',
+              borderColor: '#10B981',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          scales: {
+            x: { stacked: true },
+            y: {
+              stacked: true,
+              ticks: { callback: v => '$' + Math.abs(v) }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: ctx => `${ctx.dataset.label}: $${Math.abs(ctx.parsed.y)}`
+              }
+            },
+            legend: {
+              labels: { usePointStyle: true }
+            }
+          }
+        }
+      });
+
+      updatePlanCards(costs);
+    }
+
+    function updatePlanCards(costs) {
+      const container = document.getElementById('planCards');
+      container.innerHTML = '';
+      costs.forEach((plan, index) => {
+        const card = document.createElement('div');
+        card.className = `plan-card ${index === 0 ? 'best' : ''}`;
+        card.innerHTML = `
+          <div class="plan-header">
+            <div class="plan-name">${plan.plan}</div>
+            ${index === 0 ? '<div class="best-badge">LOWEST COST</div>' : ''}
+          </div>
+          <div class="plan-details">
+            <div>Monthly Premium: $${Math.max(0, plan.monthlyPremium)}</div>
+            <div>Deductible: $${plan.deductible}</div>
+            <div>Out-of-Pocket Max: $${plan.oopMax}</div>
+            ${plan.hsaContribution > 0 ? `<div class="hsa-contribution">HSA Contribution: $${plan.hsaContribution}</div>` : ''}
+          </div>
+          <div class="total-cost ${plan.totalCost < 0 ? 'negative' : ''}">
+            Total Annual Cost: $${plan.totalCost} ${plan.totalCost < 0 ? ' (Net Benefit)' : ''}
+          </div>`;
+        container.appendChild(card);
+      });
+    }
+
+    function updateExpenditureDefault() {
+      const coverage = document.getElementById('coverage').value;
+      const newDefault = medianExpenditures[coverage] || 2050;
+      const input = document.getElementById('expenditure');
+      input.value = formatCurrency(newDefault);
+      updateCharts();
+    }
+
+    function handleExpenditureInput() { updateCharts(); }
+    function handleExpenditureFocus() {
+      const input = document.getElementById('expenditure');
+      const value = parseExpenditureValue();
+      input.value = value;
+    }
+    function handleExpenditureBlur() {
+      const input = document.getElementById('expenditure');
+      const value = parseExpenditureValue();
+      input.value = formatCurrency(value);
+    }
+
+    // Attach listeners after DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('coverage').addEventListener('change', updateExpenditureDefault);
+      document.getElementById('partnership').addEventListener('change', updateCharts);
+      document.getElementById('tobaccoFree').addEventListener('change', updateCharts);
+      const expenditureInput = document.getElementById('expenditure');
+      expenditureInput.addEventListener('input', handleExpenditureInput);
+      expenditureInput.addEventListener('focus', handleExpenditureFocus);
+      expenditureInput.addEventListener('blur', handleExpenditureBlur);
+      updateCharts();
+    });
+  </script>
+  <!-- ====================== /HEALTH PLAN CALCULATOR LOGIC ====================== -->
+
+  <!-- ===================== REACT COMPENSATION CALCULATOR ====================== -->
+  <script type="text/babel">
+    const { useState } = React;
+
+    const CompensationCalculator = () => {
+      const CONFIG = {
+        DEFAULT_BI_MONTHLY_SALARY: 2000.00,
+        DEFAULT_VACATION_HOURS: 5,
+        DEFAULT_SICK_HOURS: 5,
+        MEDICAL_INSURANCE_AMOUNT: 589.00,
+        RETIREMENT_RATE: 0.3025,
+        SOCIAL_SECURITY_RATE: 0.062,
+        MEDICARE_RATE: 0.0145,
+        BASIC_LIFE_RATE: 0.00237,
+        LONG_TERM_DISABILITY_RATE: 0.00445,
+        RETIREE_MEDICAL_RATE: 0.0334,
+        RETIREE_BASIC_LIFE_RATE: 0.00115,
+        PAY_PERIODS_PER_YEAR: 24,
+        ANNUAL_WORK_HOURS: 2080,
+        SOCIAL_SECURITY_WAGE_CAP: 168600,
+        EFFECTIVE_DATE: 'July 31, 2025'
+      };
+
+      const [biMonthlySalary, setBiMonthlySalary] = useState(CONFIG.DEFAULT_BI_MONTHLY_SALARY);
+      const vacationHours = CONFIG.DEFAULT_VACATION_HOURS;
+      const sickHours = CONFIG.DEFAULT_SICK_HOURS;
+
+      const retirement = biMonthlySalary * CONFIG.RETIREMENT_RATE;
+      const socialSecurityCap = CONFIG.SOCIAL_SECURITY_WAGE_CAP / CONFIG.PAY_PERIODS_PER_YEAR;
+      const socialSecurity = Math.min(biMonthlySalary, socialSecurityCap) * CONFIG.SOCIAL_SECURITY_RATE;
+      const medicare = biMonthlySalary * CONFIG.MEDICARE_RATE;
+      const basicLife = biMonthlySalary * CONFIG.BASIC_LIFE_RATE;
+      const longTermDisability = biMonthlySalary * CONFIG.LONG_TERM_DISABILITY_RATE;
+      const retireeMedical = biMonthlySalary * CONFIG.RETIREE_MEDICAL_RATE;
+      const retireeBasicLife = biMonthlySalary * CONFIG.RETIREE_BASIC_LIFE_RATE;
+
+      const totalBenefits = CONFIG.MEDICAL_INSURANCE_AMOUNT + retirement + socialSecurity + medicare + basicLife + longTermDisability + retireeMedical + retireeBasicLife;
+      const totalCompensation = biMonthlySalary + totalBenefits;
+
+      const annualSalary = biMonthlySalary * CONFIG.PAY_PERIODS_PER_YEAR;
+      const annualBenefits = totalBenefits * CONFIG.PAY_PERIODS_PER_YEAR;
+      const annualTotal = totalCompensation * CONFIG.PAY_PERIODS_PER_YEAR;
+      const hourlyRate = annualSalary / CONFIG.ANNUAL_WORK_HOURS;
+
+      const benefitCategories = [
+        { name: 'Retirement', amount: retirement, color: 'bg-blue-700', icon: '↗', percentage: (retirement / totalBenefits) * 100 },
+        { name: 'Medical Insurance', amount: CONFIG.MEDICAL_INSURANCE_AMOUNT, color: 'bg-green-700', icon: '♦', percentage: (CONFIG.MEDICAL_INSURANCE_AMOUNT / totalBenefits) * 100 },
+        { name: 'Social Security', amount: socialSecurity, color: 'bg-red-700', icon: '◊', percentage: (socialSecurity / totalBenefits) * 100 },
+        { name: 'Retiree Medical', amount: retireeMedical, color: 'bg-yellow-700', icon: '♦', percentage: (retireeMedical / totalBenefits) * 100 },
+        { name: 'Medicare', amount: medicare, color: 'bg-purple-700', icon: '♦', percentage: (medicare / totalBenefits) * 100 },
+        { name: 'Long-Term Disability', amount: longTermDisability, color: 'bg-indigo-700', icon: '◊', percentage: (longTermDisability / totalBenefits) * 100 },
+        { name: 'Basic Life Insurance', amount: basicLife, color: 'bg-gray-700', icon: '◊', percentage: (basicLife / totalBenefits) * 100 },
+        { name: 'Retiree Basic Life', amount: retireeBasicLife, color: 'bg-orange-700', icon: '◊', percentage: (retireeBasicLife / totalBenefits) * 100 }
+      ].sort((a, b) => b.amount - a.amount);
+
+      return (
+        <div className="min-h-screen bg-gray-50 p-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="w-full h-24 bg-blue-900 rounded-lg mb-6 shadow-lg relative overflow-hidden">
+                <img
+                  src="./MoCareer.png"
+                  alt="Missouri Careers Compensation Calculator Banner"
+                  className="w-full h-full object-cover rounded-lg"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextElementSibling.style.display = 'flex';
+                  }}
+                />
+                <div className="absolute inset-0 bg-blue-900 flex items-center justify-between px-8 hidden">
+                  <div className="flex items-center gap-6 z-10">
+                    <div className="bg-white bg-opacity-20 p-3 rounded-lg"><span className="text-white text-2xl">🧮</span></div>
+                    <div>
+                      <h1 className="text-2xl font-bold text-white tracking-wider">COMPENSATION</h1>
+                      <h2 className="text-xl font-bold text-white tracking-wider -mt-1">CALCULATOR</h2>
+                    </div>
+                    <div className="text-5xl font-light text-white opacity-30 ml-4">%</div>
+                  </div>
+                  <div className="bg-yellow-500 text-blue-900 px-6 py-3 rounded-lg shadow-lg z-10">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl font-bold">MO</span>
+                      <span className="text-lg font-semibold">Careers</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p className="text-gray-700 max-w-3xl mx-auto font-medium">
+                Your total compensation includes more than just your paycheck. This calculator shows the state's
+                investment in your benefits for each bi-monthly pay period.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-1">
+                <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                  <h2 className="text-xl font-semibold text-blue-900 mb-4 flex items-center gap-2">
+                    <span className="inline-block w-5 h-5">💵</span> Your Information
+                  </h2>
+
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Bi-Monthly Salary (Before Deductions)
+                      </label>
+                      <input
+                        type="number"
+                        value={biMonthlySalary}
+                        onChange={(e) => setBiMonthlySalary(Number(e.target.value) || 0)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                        placeholder="Enter your bi-monthly salary"
+                        step="0.01"
+                      />
+                    </div>
+
+                    <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                      <h3 className="font-medium text-blue-900 mb-3 flex items-center gap-2">
+                        <span className="inline-block w-5 h-5">⏰</span> Paid Time Off (Per Pay Period)
+                      </h3>
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-blue-700">{vacationHours}</div>
+                          <div className="text-gray-600">Vacation Hours</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-blue-700">{sickHours}</div>
+                          <div className="text-gray-600">Sick Leave Hours</div>
+                        </div>
+                      </div>
+                      <p className="text-xs text-blue-700 mt-2 text-center">
+                        Paid time off is included in salary calculations
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 space-y-3">
+                    <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                      <div className="text-sm text-blue-700 font-medium">Hourly Rate</div>
+                      <div className="text-2xl font-bold text-blue-900">${hourlyRate.toFixed(2)}</div>
+                    </div>
+                    <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                      <div className="text-sm text-green-700 font-medium">Annual Salary</div>
+                      <div className="text-2xl font-bold text-green-800">
+                        ${annualSalary.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                    </div>
+                    <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+                      <div className="text-sm text-red-700 font-medium">Annual Benefits</div>
+                      <div className="text-2xl font-bold text-red-800">
+                        ${annualBenefits.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                    </div>
+                    <div className="bg-blue-900 text-white rounded-lg p-4">
+                      <div className="text-sm font-medium opacity-90">Annual State Investment in Your Pay & Benefits:</div>
+                      <div className="text-2xl font-bold">
+                        {annualTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-2">
+                <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                  <h2 className="text-xl font-semibold text-blue-900 mb-6">Benefits Breakdown</h2>
+                  <div className="space-y-4">
+                    {benefitCategories.map((benefit) => (
+                      <div key={benefit.name} className="relative">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">{benefit.icon}</span>
+                            <span className="font-medium text-gray-700">{benefit.name}</span>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-semibold text-gray-800">${benefit.amount.toFixed(2)}</div>
+                            <div className="text-xs text-gray-500">{benefit.percentage.toFixed(1)}%</div>
+                          </div>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-md h-3 relative overflow-hidden">
+                          <div className={`h-3 rounded-md ${benefit.color} transition-all duration-700 ease-out`} style={{ width: `${benefit.percentage}%` }}>
+                            <div className="h-full bg-gradient-to-r from-transparent to-white opacity-20" />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <h3 className="font-semibold text-blue-900 mb-4">Per Pay Period Breakdown</h3>
+                    <div className="flex items-center gap-4">
+                      <div className="flex-1">
+                        <div className="flex justify-between mb-2">
+                          <span className="text-sm text-gray-600">Salary</span>
+                          <span className="font-medium">${biMonthlySalary.toFixed(2)}</span>
+                        </div>
+                        <div className="w-full bg-blue-200 rounded-md h-4">
+                          <div className="bg-blue-700 h-4 rounded-md" style={{ width: `${(biMonthlySalary / totalCompensation) * 100}%` }} />
+                        </div>
+                      </div>
+                      <div className="text-2xl font-bold text-gray-400">+</div>
+                      <div className="flex-1">
+                        <div className="flex justify-between mb-2">
+                          <span className="text-sm text-gray-600">Benefits</span>
+                          <span className="font-medium">${totalBenefits.toFixed(2)}</span>
+                        </div>
+                        <div className="w-full bg-green-200 rounded-md h-4">
+                          <div className="bg-green-700 h-4 rounded-md" style={{ width: `${(totalBenefits / totalCompensation) * 100}%` }} />
+                        </div>
+                      </div>
+                      <div className="text-2xl font-bold text-gray-400">=</div>
+                      <div className="flex-1">
+                        <div className="flex justify-between mb-2">
+                          <span className="text-sm text-gray-600">Total</span>
+                          <span className="font-bold">${totalCompensation.toFixed(2)}</span>
+                        </div>
+                        <div className="w-full bg-yellow-200 rounded-md h-4">
+                          <div className="bg-yellow-600 h-4 rounded-md w-full" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <h3 className="font-semibold text-blue-900 mb-2">Key Rates & Caps</h3>
+                    <ul className="text-sm text-blue-800 space-y-1">
+                      <li>• Social Security cap: ${CONFIG.SOCIAL_SECURITY_WAGE_CAP.toLocaleString()} annually ({(CONFIG.SOCIAL_SECURITY_RATE * 100).toFixed(1)}% not paid above this amount)</li>
+                      <li>• Retirement contribution rate: {(CONFIG.RETIREMENT_RATE * 100).toFixed(2)}% for general state employees</li>
+                      <li>• Medical insurance: State contributes ${CONFIG.MEDICAL_INSURANCE_AMOUNT.toFixed(2)} per pay period</li>
+                      <li>• Figures are averages and may vary based on individual circumstances</li>
+                      <li>• Paid time off is included in salary calculations</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                <h3 className="font-bold text-blue-900 mb-6 text-xl text-center">Important Information & Disclaimers</h3>
+                <div className="grid md:grid-cols-3 gap-6 mb-6">
+                  <div>
+                    <h4 className="font-semibold text-blue-800 mb-3">Calculation Notes</h4>
+                    <ul className="text-sm text-gray-700 space-y-1.5">
+                      <li>• All figures are averages and may not apply to every employee</li>
+                      <li>• Your Annual Benefit Statement contains more individualized information based on your situation</li>
+                      <li>• Some costs are a percentage of pay while others are a flat rate</li>
+                      <li>• This calculator assumes bi-monthly pay periods ({CONFIG.PAY_PERIODS_PER_YEAR} per year)</li>
+                      <li>• Where indicated, calculations are based on current state benefit rates</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-blue-800 mb-3">Retirement & Social Security</h4>
+                    <ul className="text-sm text-gray-700 space-y-1.5">
+                      <li>• *This is the {(CONFIG.RETIREMENT_RATE * 100).toFixed(2)}% contribution rate for general state employees</li>
+                      <li>• If you are in the Judicial Plan, contact MOSERS for specific information</li>
+                      <li>• **For 2024, there is a salary cap of ${CONFIG.SOCIAL_SECURITY_WAGE_CAP.toLocaleString()} for Social Security</li>
+                      <li>• The {(CONFIG.SOCIAL_SECURITY_RATE * 100).toFixed(1)}% Social Security rate is not paid on any base salary above that amount</li>
+                      <li>• Medicare contributions ({(CONFIG.MEDICARE_RATE * 100).toFixed(2)}%) apply to all earnings with no cap</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-blue-800 mb-3">Additional Benefits</h4>
+                    <ul className="text-sm text-gray-700 space-y-1.5">
+                      <li>• ***There are 13 State holidays which average out to 4.33 hours of holiday pay per pay period</li>
+                      <li>• Basic Life Insurance calculated at {(CONFIG.BASIC_LIFE_RATE * 100).toFixed(3)}% of salary</li>
+                      <li>• Long-term disability coverage included at {(CONFIG.LONG_TERM_DISABILITY_RATE * 100).toFixed(3)}% of salary</li>
+                      <li>• Retiree medical and basic life insurance contributions included</li>
+                      <li>• Medical insurance shows the state's ${CONFIG.MEDICAL_INSURANCE_AMOUNT.toFixed(2)} per pay period contribution</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="text-center bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <p className="font-medium text-gray-800">
+                    This calculator provides estimated values based on current Missouri state employee benefit programs.
+                  </p>
+                  <p className="text-sm text-gray-600 mt-2">
+                    For personalized information, refer to your Annual Benefit Statement or contact your HR representative.
+                  </p>
+                  <p className="text-xs text-gray-500 mt-3">
+                    Effective as of {CONFIG.EFFECTIVE_DATE} • Missouri State Employee Benefits Program
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    ReactDOM.render(React.createElement(CompensationCalculator), document.getElementById('comp-root'));
+  </script>
+  <!-- ================== /REACT COMPENSATION CALCULATOR ================== -->
+</body>
+</html>
