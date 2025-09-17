@@ -2,7 +2,7 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# Install system dependencies for pdfplumber
+# Install system dependencies if needed (or remove if not needed)
 RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
