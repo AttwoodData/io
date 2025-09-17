@@ -1,2 +1,6 @@
-Flask==2.3.3
-pdfplumber==0.9.0
+from flask import Flask, request, send_file, jsonify
+import tempfile
+import os
+from parser import parse_pdf
+
+app = Flask(__name__)

@@ -13,4 +13,3 @@ A simple web service that extracts text from PDF files.
 curl -X POST -F "pdf_file=@document.pdf" \
   https://your-app-url.com/extract \
   --output extracted_text.txt
-
