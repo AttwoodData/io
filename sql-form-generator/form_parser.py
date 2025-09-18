@@ -104,7 +104,17 @@ def generate_output_docstring(fields: List[FieldDefinition], form_data: Dict[str
     for field in fields:
         value = form_data.get(field.field_name, '')
         if value:
-            output_lines.append(f"@{field.field_name} {field.data_type} = {value},")
+            # Check if the field is a string type or datetime that needs quotes
+            if ('VARCHAR' in field.data_type.upper() or 
+                'CHAR' in field.data_type.upper() or 
+                'TEXT' in field.data_type.upper() or
+                'DATE' in field.data_type.upper() or
+                'DATETIME' in field.data_type.upper()):
+                formatted_value = f"'{value}'"
+            else:
+                formatted_value = value
+            
+            output_lines.append(f"@{field.field_name} {field.data_type} = {formatted_value},")
         else:
             output_lines.append(f"@{field.field_name} {field.data_type},")
     
