@@ -83,8 +83,8 @@ def parse_docstring(docstring: str) -> List[FieldDefinition]:
         # Remove @ and trailing comma
         line = line[1:].rstrip(',').strip()
         
-        # Parse with regex to handle quoted display names
-        pattern = r'(\w+)\s+(\w+(?:\(\d+\))?)\s+(True|False)(?:\s+[\'"]([^\'"]*)[\'"])?'
+        # Parse with regex to handle quoted display names and complex data types like DECIMAL(10,2)
+        pattern = r'(\w+)\s+(\w+(?:\([0-9,]+\))?)\s+(True|False)(?:\s+[\'"]([^\'"]*)[\'"])?'
         match = re.match(pattern, line)
         
         if match:
