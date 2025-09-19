@@ -185,12 +185,6 @@ HTML_TEMPLATE = """
                     data-display="{{ field.display_name }}"
                 >
                 <div class="error" id="error_{{ field.field_name }}"></div>
-                {% if field.data_type.upper() == 'DATETIME' %}
-                    <div class="hint">
-                        Formats: YYYY-MM-DD HH:MM:SS, YYYY-MM-DD HH:MM, or YYYY-MM-DD<br>
-                        Examples: 2024-01-15 14:30:00, 2024-01-15 14:30, or 2024-01-15
-                    </div>
-                {% endif %}
             </div>
             {% endfor %}
             
