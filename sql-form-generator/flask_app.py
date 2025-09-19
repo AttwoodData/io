@@ -8,12 +8,26 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB limit
 
 # Example docstring - modify this for your specific use case
 FORM_DEFINITION = """
-@SCHOOL_NAME VARCHAR(30) True 'School Name'
-@SCHOOL_ID INT True 'School ID'
-@SCHOOL_COLORS VARCHAR(60) False 'School Colors'
-@OPEN_DATE DATE True 'Opening Date'
-@STUDENT_COUNT INT False 'Number of Students'
-@TUITION_COST DECIMAL(10,2) False 'Annual Tuition'
+@[INSTANCE_ID]NUMERIC (15)  False
+@[TYPE_CODE]  CHAR (10) False
+@[VENDOR_NO]  CHAR (11) True
+@[FIPS_CODE]  NUMERIC (7)   True
+@[NAME]   VARCHAR (30)  False
+@[CODE]   NUMERIC (3)   False
+@[CNTY_DIST_CODE] CHAR (6)  True
+@[ELEM_DIST_IND]  CHAR (1)  True
+@[CAR_LAD_FLAG]   CHAR (1)  True
+@[EMAIL_ADDRESS]  VARCHAR (70)  True
+@[BEGIN_DATE] DATETIME2 (7) False
+@[END_DATE]   DATETIME2 (7) False
+@[CREATED_USERID] CHAR (10) False
+@[CREATED_DATE]   DATETIME2 (7) False
+@[LAST_MOD_USERID]CHAR (10) True
+@[LAST_MOD_DATE]  DATETIME2 (7) True
+@[DUNS_NUMBER]CHAR (9)  True
+@[NCES_ID]VARCHAR (30)  True
+@[CONGRESSIONAL_DISTRICT] CHAR (2)  True
+@[CHARTER_TYPE_CODE]  VARCHAR (10)  True
 """
 
 HTML_TEMPLATE = """
