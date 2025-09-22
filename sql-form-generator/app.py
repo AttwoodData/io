@@ -128,7 +128,7 @@ HTML_TEMPLATE = """
             <div class="field-group">
                 <label for="{{ field.field_name }}" {% if field.is_required %}class="required"{% endif %}>
                     {{ field.display_name }}
-                    {% if field.get_max_length() %}(max {{ field.get_max_length() }} characters){% endif %}
+                   
                 </label>
                 <input 
                     type="{{ field.get_html_input_type() }}" 
