@@ -6,60 +6,18 @@ from form_parser import parse_docstring, generate_output_docstring
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB limit
 
-# Example docstring - modify this for your specific use case
+# Test form definition using simplified three-class system
 FORM_DEFINITION = """
-@INSTANCE_ID NUMERIC(15)  False
-@TYPE_CODE  CHAR(10) False
-@VENDOR_NO  CHAR(11) True
-@FIPS_CODE  NUMERIC(7) True
-@NAME VARCHAR(30) False
-@CODE NUMERIC(3) False
-@CNTY_DIST_CODE CHAR(6)  True
-@ELEM_DIST_IND CHAR(1)  True
-@CAR_LAD_FLAG CHAR(1)  True
-@EMAIL_ADDRESS  VARCHAR(70)  True
-@BEGIN_DATE DATETIME False
-@END_DATE   DATETIME False
-@CREATED_USERID CHAR(10) False
-@CREATED_DATE   DATETIME False
-@LAST_MOD_USERID CHAR(10) True
-@LAST_MOD_DATE  DATETIME True
-@DUNS_NUMBER CHAR(9)  True
-@NCES_IDVAR CHAR(30)  True
-@CONGRESSIONAL_DISTRICT CHAR(2)  True
-@CHARTER_TYPE_CODE  VARCHAR(10)  True
+@USER_ID INT True 'User ID'
+@EMPLOYEE_EMAIL VARCHAR(100) True 'Email Address'
+@SALARY MONEY False 'Annual Salary'
+@BIRTH_DATE DATE False 'Date of Birth'
+@START_TIME TIME False 'Start Time'
+@LAST_LOGIN DATETIME False 'Last Login'
+@IS_ACTIVE BIT True 'Active Status'
+@SCORE DECIMAL(5,2) False 'Performance Score'
+@NOTES VARCHAR(500) False 'Additional Notes'
 """
-
-#FORM_DEFINITION = """
-#@TEST_INT INT True 'Standard Integer'
-#@TEST_INTEGER INTEGER False 'Integer Alias'
-#@TEST_BIGINT BIGINT False 'Big Integer'
-#@TEST_SMALLINT SMALLINT False 'Small Integer'
-#@TEST_TINYINT TINYINT False 'Tiny Integer (0-255)'
-#@TEST_BIT BIT True 'Bit Value (0 or 1)' 
-#@TEST_NUMERIC5 NUMERIC(5) False 'Numeric 5 Digits'
-#@TEST_NUMERIC10_2 NUMERIC(10,2) False 'Numeric with Decimals'
-#@TEST_DECIMAL8_3 DECIMAL(8,3) False 'Decimal Type'
-#@TEST_FLOAT FLOAT False 'Float Value'
-#@TEST_REAL REAL False 'Real Number'
-#@TEST_MONEY MONEY False 'Money Amount'
-#@TEST_SMALLMONEY SMALLMONEY False 'Small Money'
-#@TEST_CHAR5 CHAR(5) True 'Fixed Char'
-#@TEST_VARCHAR50 VARCHAR(50) False 'Variable Char'
-#@TEST_NCHAR10 NCHAR(10) False 'Unicode Fixed'
-#@TEST_NVARCHAR100 NVARCHAR(100) False 'Unicode Variable'
-#@TEST_TEXT TEXT False 'Large Text'
-#@TEST_NTEXT NTEXT False 'Large Unicode Text'
-#@TEST_DATE DATE True 'Date Only'
-#@TEST_DATETIME DATETIME False 'Date and Time'
-#@TEST_DATETIME2 DATETIME2(7) False 'Enhanced DateTime'
-#@TEST_SMALLDATETIME SMALLDATETIME False 'Small DateTime'
-#@TEST_TIME TIME(7) False 'Time Only'
-#@TEST_DATETIMEOFFSET DATETIMEOFFSET False 'DateTime with Timezone'
-#@TEST_TIMESTAMP TIMESTAMP False 'Row Version'
-#@EMAIL_ADDRESS VARCHAR(100) True 'Email Address'
-#@EMPLOYEE_EMAIL NVARCHAR(150) False 'Employee Email'
-#"""
 
 HTML_TEMPLATE = """
 <!DOCTYPE html>
@@ -185,6 +143,12 @@ HTML_TEMPLATE = """
                     data-display="{{ field.display_name }}"
                 >
                 <div class="error" id="error_{{ field.field_name }}"></div>
+                {% if field.data_type.upper() == 'DATETIME' %}
+                    <div class="hint">
+                        Formats: YYYY-MM-DD HH:MM:SS, YYYY-MM-DD HH:MM, or YYYY-MM-DD<br>
+                        Examples: 2024-01-15 14:30:00, 2024-01-15 14:30, or 2024-01-15
+                    </div>
+                {% endif %}
             </div>
             {% endfor %}
             
