@@ -56,13 +56,22 @@ HTML_TEMPLATE = """
             content: " *"; 
             color: red; 
         }
-        input[type="text"], input[type="number"], input[type="date"], input[type="datetime-local"] { 
+        input[type="text"], input[type="number"], input[type="date"], input[type="time"], input[type="email"] { 
             width: 100%; 
             padding: 10px; 
             border: 2px solid #ddd; 
             border-radius: 5px; 
             box-sizing: border-box;
             font-size: 14px;
+        }
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .checkbox-label {
+            font-size: 14px;
+            color: #555;
         }
         input:focus {
             border-color: #007bff;
@@ -128,7 +137,7 @@ HTML_TEMPLATE = """
             <div class="field-group">
                 <label for="{{ field.field_name }}" {% if field.is_required %}class="required"{% endif %}>
                     {{ field.display_name }}
-                   
+                    
                 </label>
                 <input 
                     type="{{ field.get_html_input_type() }}" 
@@ -144,10 +153,7 @@ HTML_TEMPLATE = """
                 >
                 <div class="error" id="error_{{ field.field_name }}"></div>
                 {% if field.data_type.upper() == 'DATETIME' %}
-                    <div class="hint">
-                        Formats: YYYY-MM-DD HH:MM:SS, YYYY-MM-DD HH:MM, or YYYY-MM-DD<br>
-                        Examples: 2024-01-15 14:30:00, 2024-01-15 14:30, or 2024-01-15
-                    </div>
+                    
                 {% endif %}
             </div>
             {% endfor %}
@@ -253,25 +259,31 @@ HTML_TEMPLATE = """
                 });
             }
             
-            // Additional custom validation
-            document.querySelectorAll('input').forEach(input => {
-                const value = input.value.trim();
+            // Validate each field
+            document.querySelectorAll('input:not([type="hidden"])').forEach(input => {
+                const value = input.type === 'checkbox' ? (input.checked ? '1' : '0') : input.value.trim();
                 const isRequired = input.dataset.required === 'True';
                 const dataType = input.dataset.type.toUpperCase();
                 const displayName = input.dataset.display;
                 const errorDiv = document.getElementById('error_' + input.name);
                 
                 // Required field check
-                if (isRequired && !value) {
+                if (isRequired && (!value || value === '0')) {
                     errorDiv.textContent = displayName + ' is required';
                     errorDiv.style.display = 'block';
                     hasErrors = true;
                     return;
                 }
                 
-                if (!value) return; // Skip validation for empty optional fields
+                if (!value || value === '0') return; // Skip validation for empty optional fields
                 
-                // Additional validation checks
+                // BIT/Boolean validation
+                if (dataType.includes('BIT')) {
+                    // Checkboxes automatically provide valid values (0 or 1)
+                    return;
+                }
+                
+                // Additional validation checks for other types...
                 if (dataType.includes('EMAIL') && value) {
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailRegex.test(value)) {

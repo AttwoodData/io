@@ -142,14 +142,25 @@ class NumericValidator(BaseValidator):
         return 'MONEY' in self.data_type
     
     def get_html_input_type(self) -> str:
-        """All numeric types use HTML number input"""
+        """Return appropriate HTML input type based on numeric properties"""
+        # Boolean detection: min=0, max=1, integer type
+        if self.min_value == 0 and self.max_value == 1 and self.is_integer:
+            return 'checkbox'
+        
+        # All other numeric types use number input
         return 'number'
     
     def get_html_attributes(self) -> Dict[str, str]:
         """Generate HTML5 validation attributes"""
         attrs = {}
         
-        # Set min/max values
+        # Boolean/checkbox fields need different attributes
+        if self.min_value == 0 and self.max_value == 1 and self.is_integer:
+            # Checkbox attributes
+            attrs['value'] = '1'  # When checked, value is 1
+            return attrs
+        
+        # Numeric fields get min/max/step attributes
         if self.min_value is not None:
             attrs['min'] = str(self.min_value)
         if self.max_value is not None:
@@ -244,7 +255,7 @@ class StringValidator(BaseValidator):
         
         # Add email pattern for additional validation
         if self.is_email:
-            attrs['pattern'] = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+            attrs['pattern'] = r'[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}'
             attrs['title'] = 'Please enter a valid email address'
         
         return attrs
