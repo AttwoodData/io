@@ -8,9 +8,9 @@ services:
     restart: unless-stopped
     
     # Port mapping: host:container
-    # Container runs on 5000, exposed on host as 5002
+    # Container runs on 5000, exposed on host as 5005
     ports:
-      - "5002:5000"
+      - "5005:5000"
     
     # Environment variables from .env file
     env_file:
