@@ -1,0 +1,57 @@
+# Docker Build Ignore List
+# Git files
+.git
+.gitignore
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# Virtual environment (not needed in Docker)
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment files (use docker-compose env_file instead)
+.env
+.env.*
+
+# Logs (will be mounted as volume)
+logs/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+*.md
+docs/
+
+# Deployment scripts
+deploy.sh
+dev.sh
+
+# Testing
+tests/
+.pytest_cache/
+.coverage
+
+# Temporary files
+*.tmp
+temp/
+tmp/

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="anthropicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Transparent background (no rect needed) -->
+  
+  <!-- 12 tapered rays - all with consistent base width, varying lengths -->
+  <!-- Base width: ~8 units, Tip width: ~2 units -->
+  
+  <!-- 0° (top) - LONG -->
+  <polygon points="46,50 54,50 51,5 49,5" fill="url(#anthropicGradient)"/>
+  
+  <!-- 30° - MEDIUM -->
+  <polygon points="51,46 56,51 72,19 69,16" fill="url(#anthropicGradient)"/>
+  
+  <!-- 60° - SHORT -->
+  <polygon points="54,47 58,51 82,36 80,33" fill="url(#anthropicGradient)"/>
+  
+  <!-- 90° (right) - LONG -->
+  <polygon points="50,46 50,54 95,51 95,49" fill="url(#anthropicGradient)"/>
+  
+  <!-- 120° - MEDIUM -->
+  <polygon points="46,51 51,56 80,84 84,81" fill="url(#anthropicGradient)"/>
+  
+  <!-- 150° - SHORT -->
+  <polygon points="47,54 51,58 67,80 64,77" fill="url(#anthropicGradient)"/>
+  
+  <!-- 180° (bottom) - LONG -->
+  <polygon points="46,50 54,50 51,95 49,95" fill="url(#anthropicGradient)"/>
+  
+  <!-- 210° - MEDIUM -->
+  <polygon points="44,49 49,54 28,81 31,84" fill="url(#anthropicGradient)"/>
+  
+  <!-- 240° - SHORT -->
+  <polygon points="42,49 47,53 20,64 18,67" fill="url(#anthropicGradient)"/>
+  
+  <!-- 270° (left) - LONG -->
+  <polygon points="50,46 50,54 5,51 5,49" fill="url(#anthropicGradient)"/>
+  
+  <!-- 300° - MEDIUM -->
+  <polygon points="44,49 49,44 16,19 20,16" fill="url(#anthropicGradient)"/>
+  
+  <!-- 330° - SHORT -->
+  <polygon points="47,42 51,47 33,20 36,23" fill="url(#anthropicGradient)"/>
+  
+  <!-- Center circle (on top) -->
+  <circle cx="50" cy="50" r="12" fill="url(#anthropicGradient)"/>
+</svg>

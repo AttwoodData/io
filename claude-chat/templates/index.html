@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Chat</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+
+    <!-- Google Fonts - Inter (Metropolis alternative) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="chat-header">
+            <div class="header-content">
+                <h1>Claude Chat</h1>
+                <div class="header-actions">
+                    <button id="export-btn" class="btn-secondary" title="Export conversation">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export
+                    </button>
+                    <button id="new-chat-btn" class="btn-primary" title="Start new conversation">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"></path>
+                        </svg>
+                        New Chat
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <!-- Messages Display -->
+            <div id="messages-container" class="messages-container">
+                <div class="welcome-message">
+                    <div class="welcome-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h2>Start a Conversation with Claude</h2>
+                    <p>Ask me anything! I'll maintain context throughout our conversation.</p>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-container">
+                <form id="chat-form" class="chat-form">
+                    <div class="input-wrapper">
+                        <textarea 
+                            id="message-input" 
+                            name="message" 
+                            placeholder="Type your message here..."
+                            rows="3"
+                            maxlength="4000"
+                            autofocus
+                        ></textarea>
+                        <div class="input-footer">
+                            <div class="char-counter">
+                                <span id="char-count">0</span> / 4000
+                            </div>
+                            <button type="submit" id="send-btn" class="send-button">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Status Indicator -->
+        <div id="status-indicator" class="status-indicator">
+            <div class="status-dot"></div>
+            <span class="status-text">Connecting...</span>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Claude is thinking...</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
