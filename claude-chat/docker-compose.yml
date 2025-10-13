@@ -7,19 +7,20 @@ services:
     container_name: claude-chat
     restart: unless-stopped
     
-    # Port mapping: host:container
-    # Container runs on 5000, exposed on host as 5005
     ports:
-      - "5005:5000"
+      - "5002:5000"
     
-    # Environment variables from .env file
     env_file:
       - .env
     
-    # Volume mounts
+    # ADD THIS - allows container to reach host machine
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    
     volumes:
-      # Persist logs outside container
       - ./logs:/app/logs
+    
+    # ... rest stays the same
     
     # Health check
     healthcheck:

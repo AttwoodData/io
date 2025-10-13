@@ -18,7 +18,7 @@ NC='\033[0m'
 
 print_status() { echo -e "${GREEN}✓${NC} $1"; }
 print_error() { echo -e "${RED}✗${NC} $1"; }
-print_warning() { echo -e "${YELLOW}⚠${NC} $1"; }
+print_warning() { echo -e "${YELLOW}⚠ ${NC} $1"; }
 print_info() { echo -e "${BLUE}ℹ${NC} $1"; }
 
 # Check we're in the right directory
@@ -39,9 +39,13 @@ else
     exit 1
 fi
 
-# Check Docker Compose
-if command -v docker-compose &> /dev/null; then
+# Check Docker Compose (V2 plugin or V1 standalone)
+if docker compose version &> /dev/null 2>&1; then
+    print_status "Docker Compose installed: $(docker compose version)"
+    DOCKER_COMPOSE="docker compose"
+elif command -v docker-compose &> /dev/null; then
     print_status "Docker Compose installed: $(docker-compose --version)"
+    DOCKER_COMPOSE="docker-compose"
 else
     print_error "Docker Compose not installed!"
     exit 1
@@ -60,11 +64,11 @@ else
     exit 1
 fi
 
-# Check port 5002
-if lsof -Pi :5002 -sTCP:LISTEN -t >/dev/null 2>&1; then
-    print_warning "Port 5002 in use"
+# Check port 5005
+if lsof -Pi :5005 -sTCP:LISTEN -t >/dev/null 2>&1; then
+    print_warning "Port 5005 in use"
 else
-    print_status "Port 5002 available"
+    print_status "Port 5005 available"
 fi
 
 echo ""
@@ -73,10 +77,10 @@ echo "===================="
 
 # Build and deploy
 print_info "Building Docker image..."
-docker-compose build
+$DOCKER_COMPOSE build
 
 print_info "Starting container..."
-docker-compose up -d
+$DOCKER_COMPOSE up -d
 
 sleep 5
 
@@ -85,13 +89,13 @@ if docker ps | grep -q claude-chat; then
     print_status "Container running"
 else
     print_error "Container not running!"
-    docker-compose logs
+    $DOCKER_COMPOSE logs
     exit 1
 fi
 
 # Test health
 print_info "Testing health endpoint..."
-if curl -sf http://localhost:5002/health > /dev/null; then
+if curl -sf http://localhost:5005/health > /dev/null; then
     print_status "Health check passed"
 else
     print_warning "Health check failed"
@@ -101,5 +105,5 @@ echo ""
 print_status "Setup complete!"
 echo ""
 echo "🔗 URLs:"
-echo "   Internal: http://localhost:5002"
+echo "   Local: http://localhost:5005"
 echo "   After Nginx: https://claude.attwoodanalytics.com"
