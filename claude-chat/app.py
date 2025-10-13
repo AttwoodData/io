@@ -52,22 +52,36 @@ except Exception as e:
 # Initialize Local LLM client
 local_client = None
 try:
-    # Try to connect to Ollama on host machine
-    # Use host.docker.internal to reach host from Docker container
+    # Allow override via env; default to host.docker.internal (if mapped)
+    ollama_host = os.getenv("OLLAMA_HOST", "host.docker.internal")
+    ollama_port = int(os.getenv("OLLAMA_PORT", "11434"))
+
+    # First attempt
     local_client = LocalLLMClient(
-        host="host.docker.internal",
-        port=11434,
+        host=ollama_host,
+        port=ollama_port,
         model="qwen2.5:14b"
     )
+    if not local_client.test_connection():
+        logger.warning(f"Local LLM not reachable at {ollama_host}:{ollama_port}; trying bridge IP 172.17.0.1")
+        # Second attempt: Docker bridge gateway on Linux
+        local_client = LocalLLMClient(
+            host="172.17.0.1",
+            port=ollama_port,
+            model="qwen2.5:14b"
+        )
+
     if local_client.test_connection():
         logger.info("Local LLM (Qwen2.5 14B) initialized successfully")
     else:
-        logger.warning("Local LLM not available, Claude-only mode")
+        logger.warning("Local LLM not available after both attempts; continuing Claude-only")
         local_client = None
+
 except Exception as e:
     logger.error(f"Failed to initialize local LLM: {e}")
     logger.info("Continuing in Claude-only mode")
     local_client = None
+
 
 # Initialize router
 router = ModelRouter()
