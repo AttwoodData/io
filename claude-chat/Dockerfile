@@ -21,6 +21,7 @@ COPY app.py .
 COPY wsgi.py .
 COPY templates/ templates/
 COPY static/ static/
+COPY llm/ llm/
 
 # Create logs directory
 RUN mkdir -p logs && chmod 755 logs
