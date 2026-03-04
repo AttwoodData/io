@@ -1,663 +1,166 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mark Attwood - Business Analyst & AI Developer</title>
-    <meta name="description" content="Business Analyst with Missouri ITSD building AI tools for state government. RAG systems, machine learning, legacy modernization. MA Economics, published Python package.">
-    <meta name="keywords" content="data science, analytics, machine learning, RAG, AI, Python, SQL, Missouri, ITSD, DESE">
-    <meta name="author" content="Mark Attwood">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-ink: #1a1a1a;
-            --color-ink-light: #4a4a4a;
-            --color-ink-muted: #777;
-            --color-paper: #faf9f7;
-            --color-paper-warm: #f3f1ed;
-            --color-accent: #2d5a27;
-            --color-accent-light: #3a7432;
-            --color-accent-wash: #e8f0e7;
-            --color-rule: #d4d0c8;
-            --color-code-bg: #2b2b2b;
-            --font-serif: 'Source Serif 4', Georgia, serif;
-            --font-sans: 'DM Sans', -apple-system, sans-serif;
-            --font-mono: 'JetBrains Mono', 'Consolas', monospace;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: var(--font-sans);
-            color: var(--color-ink);
-            background-color: var(--color-paper);
-            background-image: url('images/wallpaper_tree.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            background-attachment: fixed;
-            line-height: 1.65;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        header {
-            background-color: white;
-            padding: 0;
-            text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
-        }
-
-        main {
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 0 1.5rem 4rem;
-        }
-
-        /* ---- ABOUT SECTION ---- */
-        .about-section {
-            background: white;
-            border-radius: 3px;
-            padding: 3rem 2.5rem;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            margin-bottom: 2.5rem;
-            border-top: 3px solid var(--color-accent);
-        }
-
-        .about-header {
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--color-rule);
-            padding-bottom: 1.5rem;
-        }
-
-        .about-header .subtitle {
-            font-family: var(--font-sans);
-            font-size: 0.95rem;
-            color: var(--color-ink-muted);
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-
-        .about-content {
-            font-family: var(--font-serif);
-            font-size: 1.08rem;
-            color: var(--color-ink-light);
-            line-height: 1.75;
-        }
-
-        .about-content p {
-            margin-bottom: 1.1rem;
-        }
-
-        .about-content p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* ---- CREDENTIALS STRIP ---- */
-        .credentials {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1px;
-            background: var(--color-rule);
-            border-radius: 3px;
-            overflow: hidden;
-            margin: 2.5rem 0;
-        }
-
-        .credential-item {
-            background: var(--color-paper-warm);
-            padding: 1.3rem 1.2rem;
-            text-align: center;
-        }
-
-        .credential-item h3 {
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--color-ink-muted);
-            margin-bottom: 0.4rem;
-            font-weight: 500;
-        }
-
-        .credential-item p {
-            font-family: var(--font-serif);
-            font-size: 0.95rem;
-            color: var(--color-ink);
-            line-height: 1.45;
-            font-weight: 600;
-        }
-
-        .credential-item .detail {
-            font-weight: 400;
-            font-size: 0.85rem;
-            color: var(--color-ink-light);
-        }
-
-        /* ---- TECH STRIP ---- */
-        .tech-strip {
-            background: var(--color-code-bg);
-            border-radius: 3px;
-            padding: 1.5rem 2rem;
-            margin: 2.5rem 0;
-            overflow-x: auto;
-        }
-
-        .tech-strip h3 {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #888;
-            margin-bottom: 1rem;
-        }
-
-        .tech-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tech-tag {
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            background: rgba(255,255,255,0.08);
-            color: #ccc;
-            padding: 0.35rem 0.7rem;
-            border-radius: 2px;
-            border: 1px solid rgba(255,255,255,0.1);
-            white-space: nowrap;
-        }
-
-        .tech-tag.highlight {
-            background: var(--color-accent);
-            color: white;
-            border-color: var(--color-accent);
-        }
-
-        /* ---- NAV BUTTONS ---- */
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 2rem 0 0;
-            flex-wrap: wrap;
-        }
-
-        .nav-button {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-            padding: 0.65rem 1.4rem;
-            border-radius: 3px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-button.primary {
-            background-color: var(--color-accent);
-            color: white;
-        }
-
-        .nav-button.primary:hover {
-            background-color: var(--color-accent-light);
-        }
-
-        .nav-button.secondary {
-            background-color: transparent;
-            border: 1.5px solid var(--color-accent);
-            color: var(--color-accent);
-        }
-
-        .nav-button.secondary:hover {
-            background-color: var(--color-accent);
-            color: white;
-        }
-
-        /* ---- CV SECTION ---- */
-        .cv-section {
-            background: white;
-            border-radius: 3px;
-            padding: 2.5rem;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            margin-bottom: 2.5rem;
-        }
-
-        .cv-section > h2 {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.8rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid var(--color-rule);
-            color: var(--color-ink);
-        }
-
-        .cv-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .cv-highlight {
-            padding: 1.2rem 1.3rem;
-            background: var(--color-paper-warm);
-            border-radius: 3px;
-            border-left: 3px solid var(--color-accent);
-        }
-
-        .cv-highlight h3 {
-            font-family: var(--font-sans);
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--color-accent);
-            margin-bottom: 0.6rem;
-        }
-
-        .cv-highlight p {
-            font-size: 0.9rem;
-            color: var(--color-ink-light);
-            margin-bottom: 0.4rem;
-            line-height: 1.55;
-        }
-
-        .cv-highlight strong {
-            color: var(--color-ink);
-        }
-
-        .download-cv {
-            text-align: center;
-            margin-top: 1.8rem;
-        }
-
-        .btn-download {
-            display: inline-block;
-            background: var(--color-accent);
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 3px;
-            text-decoration: none;
-            font-family: var(--font-sans);
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .btn-download:hover {
-            background: var(--color-accent-light);
-        }
-
-        /* ---- PROJECTS SECTION ---- */
-        .projects-section > h2 {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.8rem;
-            color: var(--color-ink);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 3px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-        }
-
-        .project-card.featured {
-            grid-column: 1 / -1;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-        }
-
-        .project-image {
-            width: 100%;
-            height: 160px;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .project-card.featured .project-image {
-            height: 100%;
-            min-height: 220px;
-        }
-
-        .project-content {
-            padding: 1.4rem 1.5rem;
-        }
-
-        .project-content h3 {
-            font-family: var(--font-serif);
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--color-ink);
-        }
-
-        .project-card.featured .project-content h3 {
-            font-size: 1.3rem;
-        }
-
-        .project-content p {
-            font-size: 0.9rem;
-            color: var(--color-ink-light);
-            margin-bottom: 0.8rem;
-            line-height: 1.55;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .tag {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            background: var(--color-accent-wash);
-            color: var(--color-accent);
-            padding: 0.25rem 0.6rem;
-            border-radius: 2px;
-        }
-
-        .view-project {
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--color-accent);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
-        }
-
-        .view-project:hover {
-            border-bottom-color: var(--color-accent);
-        }
-
-        /* ---- FOOTER ---- */
-        footer {
-            background: var(--color-ink);
-            color: var(--color-ink-muted);
-            text-align: center;
-            padding: 1.5rem;
-            font-size: 0.85rem;
-            margin-top: 3rem;
-        }
-
-        /* ---- RESPONSIVE ---- */
-        @media (max-width: 768px) {
-            .about-section { padding: 2rem 1.5rem; }
-            .cv-section { padding: 2rem 1.5rem; }
-            .cv-grid { grid-template-columns: 1fr; }
-            .credentials { grid-template-columns: 1fr; }
-            .project-card.featured { grid-template-columns: 1fr; }
-            .project-card.featured .project-image { min-height: 180px; }
-            .nav-buttons { flex-direction: column; align-items: center; }
-        }
-
-        @media (max-width: 480px) {
-            main { padding: 0 0.75rem 3rem; }
-            .about-section { padding: 1.5rem 1.2rem; }
-            .about-content { font-size: 1rem; }
-        }
-    </style>
-    <script src="header-component.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Author" content="Mark Attwood">
+  <meta name="Description" content="Business Analyst with Missouri ITSD building AI tools for state government. RAG systems, machine learning, legacy modernization. MA Economics, published Python package.">
+  <meta name="Keywords" content="data science, analytics, machine learning, RAG, AI, Python, SQL, Missouri, ITSD, DESE">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    body {background-color: #f9f8f5}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414; min-height: 15.0px}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.4px 'Helvetica Neue'; color: #646464; -webkit-text-stroke: #646464}
+    p.p3 {margin: 0.0px 0.0px 13.2px 0.0px; font: 13.0px 'Helvetica Neue'; color: #393939; -webkit-text-stroke: #393939}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #393939; -webkit-text-stroke: #393939}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 11.4px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 10.2px 'Helvetica Neue'; color: #393939; -webkit-text-stroke: #393939}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.4px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #234a1d}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.4px 'Helvetica Neue'; color: #c1c1c1; -webkit-text-stroke: #c1c1c1; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.078)}
+    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.8px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #234a1d}
+    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.8px 'Helvetica Neue'; color: #234a1d; -webkit-text-stroke: #234a1d}
+    p.p15 {margin: 0.0px 0.0px 4.8px 0.0px; font: 10.8px 'Helvetica Neue'; color: #393939; -webkit-text-stroke: #393939}
+    p.p16 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 10.8px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p17 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414; background-color: #202020; min-height: 15.0px}
+    p.p19 {margin: 0.0px 0.0px 9.6px 0.0px; font: 10.8px 'Helvetica Neue'; color: #393939; -webkit-text-stroke: #393939}
+    p.p20 {margin: 0.0px 0.0px 0.0px 0.0px; font: 8.6px 'Helvetica Neue'; color: #234a1d; -webkit-text-stroke: #234a1d; background-color: #e3ede1}
+    p.p21 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.2px 'Helvetica Neue'; color: #234a1d; -webkit-text-stroke: #234a1d}
+    p.p22 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414; background-color: #234a1d; min-height: 15.0px}
+    p.p24 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414; background-color: #2d5994; min-height: 15.0px}
+    p.p25 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414; background-color: #3b6b30; min-height: 15.0px}
+    p.p26 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414; background-color: #3a4355; min-height: 15.0px}
+    p.p27 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414; background-color: #485677; min-height: 15.0px}
+    p.p28 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 10.2px 'Helvetica Neue'; color: #646464; -webkit-text-stroke: #646464}
+    span.s1 {font-kerning: none}
+    span.s2 {font-kerning: none; background-color: #ffffff}
+    span.s3 {font-kerning: none; background-color: #f0eee9}
+    span.s4 {font-kerning: none; background-color: #202020}
+    span.s5 {font: 10.8px 'Helvetica Neue'; font-kerning: none; color: #234a1d; -webkit-text-stroke: 0px #234a1d}
+    span.s6 {font-kerning: none; color: #141414; background-color: #f0eee9; -webkit-text-stroke: 0px #141414}
+    span.s7 {font-kerning: none; background-color: #234a1d}
+    span.s8 {font: 10.2px 'Helvetica Neue'; font-kerning: none; color: #234a1d; -webkit-text-stroke: 0px #234a1d}
+    span.s9 {font-kerning: none; background-color: #141414}
+  </style>
 </head>
 <body>
-    <div id="header-container"></div>
-
-    <main>
-        <!-- About Section -->
-        <section class="about-section">
-            <div class="about-header">
-                <p class="subtitle">State of Missouri ITSD &bull; AI Development &bull; Machine Learning</p>
-            </div>
-
-            <div class="about-content">
-                <p>I am a Business Analyst with Missouri's ITSD, currently supporting applications for the Department of Elementary and Secondary Education. Before that I built XGBoost models for billion-dollar mortgage portfolios at Veterans United, ran a coffee business for 12 years, worked as an electrician, and studied economics at three universities. The common thread is that I like taking complicated systems apart and figuring out how to make them work better.</p>
-
-                <p>My current focus is AI and legacy system modernization. I recently refactored the School Finance application's data pipeline, replacing record-level Visual Basic calculations routed through 6 SSIS packages with array-level SQL, reducing database calls from over 300,000 to a handful. On my own time I built a production-ready RAG system that processes 22.6 million words of Missouri education policy and statute documentation, with GPU-accelerated embeddings, hybrid search, and citation enforcement. It runs locally on Linux and is designed for FERPA compliance.</p>
-
-                <p>I hold an MA in Economics from UMSL with a 3.914 GPA and graduate certificates in AI, Data Science, and Applied Econometrics.</p>
-            </div>
-
-            <!-- Credentials -->
-            <div class="credentials">
-                <div class="credential-item">
-                    <h3>Education</h3>
-                    <p>MA Economics</p>
-                    <p class="detail">UMSL &bull; 3.914 GPA<br>3 Graduate Certificates</p>
-                </div>
-                <div class="credential-item">
-                    <h3>Current Role</h3>
-                    <p>Business Analyst</p>
-                    <p class="detail">Missouri ITSD<br>DESE Applications</p>
-                </div>
-                <div class="credential-item">
-                    <h3>Certification</h3>
-                    <p>Microsoft AZ-900</p>
-                    <p class="detail">Azure Fundamentals</p>
-                </div>
-                <div class="credential-item">
-                    <h3>Open Source</h3>
-                    <p>gbmframework</p>
-                    <p class="detail">Published on PyPI</p>
-                </div>
-                <div class="credential-item">
-                    <h3>Enterprise Scale</h3>
-                    <p>8B+ Observations</p>
-                    <p class="detail">GNMA Mortgage Data<br>75% Load Time Reduction</p>
-                </div>
-                <div class="credential-item">
-                    <h3>Business</h3>
-                    <p>$1M Annual Revenue</p>
-                    <p class="detail">12 Years Ownership<br>20 Employees</p>
-                </div>
-            </div>
-
-            <!-- Tech Strip -->
-            <div class="tech-strip">
-                <h3>Tools &amp; Technologies</h3>
-                <div class="tech-grid">
-                    <span class="tech-tag highlight">Python</span>
-                    <span class="tech-tag highlight">SQL</span>
-                    <span class="tech-tag highlight">R</span>
-                    <span class="tech-tag">XGBoost</span>
-                    <span class="tech-tag">SHAP</span>
-                    <span class="tech-tag">PyTorch</span>
-                    <span class="tech-tag">ChromaDB</span>
-                    <span class="tech-tag">sentence-transformers</span>
-                    <span class="tech-tag">Ollama</span>
-                    <span class="tech-tag">CUDA</span>
-                    <span class="tech-tag">Tableau</span>
-                    <span class="tech-tag">Power BI</span>
-                    <span class="tech-tag">Snowflake</span>
-                    <span class="tech-tag">PySpark</span>
-                    <span class="tech-tag">ArcGIS Pro</span>
-                    <span class="tech-tag">Git</span>
-                    <span class="tech-tag">MongoDB</span>
-                    <span class="tech-tag">EViews</span>
-                    <span class="tech-tag">Excel</span>
-                </div>
-            </div>
-
-            <div class="nav-buttons">
-                <a href="#cv-preview" class="nav-button primary">Background</a>
-                <a href="#projects" class="nav-button secondary">Projects</a>
-                <a href="https://github.com/AttwoodData" class="nav-button secondary">GitHub</a>
-                <a href="mailto:markattwood12@gmail.com" class="nav-button secondary">Contact</a>
-            </div>
-        </section>
-
-        <!-- CV Section -->
-        <section id="cv-preview" class="cv-section">
-            <h2>Professional Background</h2>
-
-            <div class="cv-grid">
-                <div class="cv-highlight">
-                    <h3>Current Role</h3>
-                    <p><strong>Business Analyst</strong><br>ITSD, Office of Administration (Aug 2025 &ndash; Present)</p>
-                    <p>Supporting DESE applications. Refactored School Finance data pipeline, reducing 300,000+ database calls to a handful. Identified and remediated PII security vulnerabilities in production systems. Built RAG system for education policy on personal time.</p>
-                </div>
-
-                <div class="cv-highlight">
-                    <h3>Previous Role</h3>
-                    <p><strong>Capital Markets Analyst</strong><br>Veterans United Home Loans (Jul 2024 &ndash; Feb 2025)</p>
-                    <p>Built XGBoost delinquency prediction models for billion-dollar mortgage portfolios. Optimized GNMA dashboard from 8-hour to 2-hour load time on 8B+ observations. Created Python automation saving 7&ndash;9 hours weekly.</p>
-                </div>
-
-                <div class="cv-highlight">
-                    <h3>Education</h3>
-                    <p><strong>MA Economics</strong> &ndash; University of Missouri-St. Louis (2024)</p>
-                    <p><strong>Certificates:</strong> Data Science, Applied Econometrics, Artificial Intelligence</p>
-                    <p><strong>BA Economics</strong> &ndash; University of Cincinnati</p>
-                    <p><strong>Doctoral coursework</strong> &ndash; University of Illinois Chicago</p>
-                </div>
-
-                <div class="cv-highlight">
-                    <h3>Technical Focus</h3>
-                    <p><strong>AI/ML:</strong> RAG systems, LLM integration, XGBoost, gradient boosting, SHAP explainability</p>
-                    <p><strong>Data:</strong> SQL optimization for billion-scale datasets, ETL pipeline development, SSIS</p>
-                    <p><strong>Methods:</strong> Causal inference, econometrics, time series, A/B testing</p>
-                </div>
-            </div>
-
-            <div class="download-cv">
-                <a href="downloads/mark-attwood-resume.pdf" class="btn-download">Download Resume (PDF)</a>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="projects-section">
-            <h2>Projects</h2>
-            <div class="projects-grid">
-
-                <!-- Featured: RAG System -->
-                <div class="project-card featured">
-                    <div class="project-image" style="background-image: url('images/rag-system.jpg'); background-color: var(--color-code-bg);"></div>
-                    <div class="project-content">
-                        <h3>DESE Policy RAG System</h3>
-                        <p>Production-ready retrieval-augmented generation system processing 22.6 million words of Missouri education statutes and policy documents. GPU-accelerated embeddings with sentence-transformers, hybrid search combining vector similarity with keyword boosting for statute number detection, and citation enforcement so every answer traces to its source. Runs locally on Linux with an 8GB GPU, designed for FERPA compliance.</p>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">RAG</span>
-                            <span class="tag">ChromaDB</span>
-                            <span class="tag">sentence-transformers</span>
-                            <span class="tag">PyTorch</span>
-                            <span class="tag">CUDA</span>
-                        </div>
-                        <a href="rag-system.html" class="view-project">View Project &rarr;</a>
-                    </div>
-                </div>
-
-                <!-- GBM Framework -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/gbm-framework.jpg'); background-color: var(--color-accent);"></div>
-                    <div class="project-content">
-                        <h3>GBM Framework</h3>
-                        <p>Open-source Python package unifying XGBoost, LightGBM, and CatBoost with automated hyperparameter optimization, SHAP analysis, and system resource detection. Published on PyPI.</p>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Machine Learning</span>
-                            <span class="tag">PyPI</span>
-                        </div>
-                        <a href="gbm-framework.html" class="view-project">View Project &rarr;</a>
-                    </div>
-                </div>
-
-                <!-- GNMA Dashboard -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/gnma-dashboard.jpg'); background-color: #3a6ea5;"></div>
-                    <div class="project-content">
-                        <h3>GNMA Delinquency Dashboard</h3>
-                        <p>Interactive Tableau dashboard analyzing government-backed mortgage portfolio performance. Optimized SQL queries for 8B+ observations, reducing load time by 75%.</p>
-                        <div class="project-tags">
-                            <span class="tag">Tableau</span>
-                            <span class="tag">SQL</span>
-                            <span class="tag">Financial Analysis</span>
-                        </div>
-                        <a href="gnma.html" class="view-project">View Project &rarr;</a>
-                    </div>
-                </div>
-
-                <!-- ArcGIS -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/arcgis-analysis.jpg'); background-color: #4a7c3f;"></div>
-                    <div class="project-content">
-                        <h3>Coffeeshop Site Selection</h3>
-                        <p>Geospatial analysis combining ArcGIS Pro and Python web scraping to optimize business location using demographic data and market gap analysis.</p>
-                        <div class="project-tags">
-                            <span class="tag">ArcGIS Pro</span>
-                            <span class="tag">Python</span>
-                            <span class="tag">Geospatial</span>
-                        </div>
-                        <a href="arcgis.html" class="view-project">View Project &rarr;</a>
-                    </div>
-                </div>
-
-                <!-- Fleet Electrification -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/fleet-electrification.jpg'); background-color: #4a5568;"></div>
-                    <div class="project-content">
-                        <h3>Fleet Electrification BCA</h3>
-                        <p>Comprehensive benefit-cost analysis of municipal fleet transition from ICE to electric vehicles for the City of Kirkwood.</p>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Cost-Benefit Analysis</span>
-                            <span class="tag">Policy</span>
-                        </div>
-                        <a href="fleet-cba.html" class="view-project">View Project &rarr;</a>
-                    </div>
-                </div>
-
-                <!-- Benchmarking -->
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/benchmarking-project.jpg'); background-color: #5a6a8a;"></div>
-                    <div class="project-content">
-                        <h3>Gradient Boosting Benchmark</h3>
-                        <p>Performance evaluation of gradient boosting algorithms across multiple datasets using the GBM Framework.</p>
-                        <div class="project-tags">
-                            <span class="tag">Machine Learning</span>
-                            <span class="tag">Benchmarking</span>
-                            <span class="tag">Python</span>
-                        </div>
-                        <a href="benchmark-analysis.html" class="view-project">View Project &rarr;</a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Mark Attwood</p>
-    </footer>
-
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-    </script>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s2">STATE OF MISSOURI ITSD • AI DEVELOPMENT • MACHINE LEARNING</span></p>
+<p class="p3"><span class="s2">I am a Business Analyst with Missouri's ITSD, currently supporting applications for the Department of Elementary and Secondary Education. Before that I built XGBoost models for billion-dollar mortgage portfolios at Veterans United, ran a coffee business for 12 years, worked as an electrician, and studied economics. The common thread is that I like taking complicated systems apart and figuring out how to make them work better.</span></p>
+<p class="p3"><span class="s2">My current focus is AI and legacy system modernization. I recently refactored part of the School Finance application's data pipeline, replacing record-level Visual Basic calculations routed through 6 SSIS packages with array-level SQL, reducing database calls from over 300,000 to a handful. On my own time I built a production-ready RAG system that processes 22.6 million words of Missouri education policy and statute documentation, with GPU-accelerated embeddings, hybrid search, and citation enforcement. It runs locally on Linux and is designed for FERPA compliance.</span></p>
+<p class="p4"><span class="s2">I hold an MA in Economics from UMSL with a 3.914 GPA and graduate certificates in AI, Data Science, and Applied Econometrics.</span></p>
+<h3 style="margin: 0.0px 0.0px 4.8px 0.0px; text-align: center; font: 9.0px 'Helvetica Neue'; color: #646464; -webkit-text-stroke: #646464"><span class="s3">EDUCATION</span></h3>
+<p class="p6"><span class="s3">MA Economics</span></p>
+<p class="p7"><span class="s3">UMSL • 3.914 GPA</span><span class="s1"><br>
+</span><span class="s3">3 Graduate Certificates</span></p>
+<h3 style="margin: 0.0px 0.0px 4.8px 0.0px; text-align: center; font: 9.0px 'Helvetica Neue'; color: #646464; -webkit-text-stroke: #646464"><span class="s3">CURRENT ROLE</span></h3>
+<p class="p6"><span class="s3">Business Analyst</span></p>
+<p class="p7"><span class="s3">Missouri ITSD</span><span class="s1"><br>
+</span><span class="s3">DESE Applications</span></p>
+<h3 style="margin: 0.0px 0.0px 4.8px 0.0px; text-align: center; font: 9.0px 'Helvetica Neue'; color: #646464; -webkit-text-stroke: #646464"><span class="s3">CERTIFICATION</span></h3>
+<p class="p6"><span class="s3">Microsoft AZ-900</span></p>
+<p class="p7"><span class="s3">Azure Fundamentals</span></p>
+<h3 style="margin: 0.0px 0.0px 4.8px 0.0px; text-align: center; font: 9.0px 'Helvetica Neue'; color: #646464; -webkit-text-stroke: #646464"><span class="s3">OPEN SOURCE</span></h3>
+<p class="p6"><span class="s3">gbmframework</span></p>
+<p class="p7"><span class="s3">Published on PyPI</span></p>
+<h3 style="margin: 0.0px 0.0px 4.8px 0.0px; text-align: center; font: 9.0px 'Helvetica Neue'; color: #646464; -webkit-text-stroke: #646464"><span class="s3">ENTERPRISE SCALE</span></h3>
+<p class="p6"><span class="s3">8B+ Observations</span></p>
+<p class="p7"><span class="s3">GNMA Mortgage Data</span><span class="s1"><br>
+</span><span class="s3">75% Load Time Reduction</span></p>
+<h3 style="margin: 0.0px 0.0px 4.8px 0.0px; text-align: center; font: 9.0px 'Helvetica Neue'; color: #646464; -webkit-text-stroke: #646464"><span class="s3">BUSINESS</span></h3>
+<p class="p6"><span class="s3">$1M Annual Revenue</span></p>
+<p class="p7"><span class="s3">12 Years Ownership</span><span class="s1"><br>
+</span><span class="s3">20 Employees</span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; font: 9.0px 'Helvetica Neue'; color: #757575; -webkit-text-stroke: #757575"><span class="s4">TOOLS &amp; TECHNOLOGIES</span></h3>
+<p class="p9"><span class="s1">Python</span></p>
+<p class="p9"><span class="s1">SQL</span></p>
+<p class="p9"><span class="s1">R</span></p>
+<p class="p10"><span class="s1">XGBoost</span></p>
+<p class="p10"><span class="s1">SHAP</span></p>
+<p class="p10"><span class="s1">PyTorch</span></p>
+<p class="p10"><span class="s1">ChromaDB</span></p>
+<p class="p10"><span class="s1">sentence-transformers</span></p>
+<p class="p10"><span class="s1">Ollama</span></p>
+<p class="p10"><span class="s1">CUDA</span></p>
+<p class="p10"><span class="s1">Tableau</span></p>
+<p class="p10"><span class="s1">Power BI</span></p>
+<p class="p10"><span class="s1">Snowflake</span></p>
+<p class="p10"><span class="s1">PySpark</span></p>
+<p class="p10"><span class="s1">ArcGIS Pro</span></p>
+<p class="p10"><span class="s1">Git</span></p>
+<p class="p10"><span class="s1">MongoDB</span></p>
+<p class="p10"><span class="s1">EViews</span></p>
+<p class="p10"><span class="s1">Excel</span></p>
+<p class="p11"><span class="s1">Background</span></p>
+<p class="p12"><span class="s2">Projects</span></p>
+<p class="p12"><span class="s2"><a href="https://github.com/AttwoodData">GitHub<span class="s5"></span></a></span></p>
+<p class="p12"><span class="s2"><a href="mailto:markattwood12@gmail.com">Contact<span class="s5"></span></a></span></p>
+<h2 style="margin: 0.0px 0.0px 21.6px 0.0px; font: 18.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414"><span class="s2">Professional Background</span></h2>
+<h3 style="margin: 0.0px 0.0px 7.2px 0.0px; font: 11.4px 'Helvetica Neue'; color: #234a1d; -webkit-text-stroke: #234a1d"><span class="s3">Current Role</span></h3>
+<p class="p15"><span class="s6">Business Analyst</span><span class="s1"><br>
+</span><span class="s3">ITSD, Office of Administration (Aug 2025 – Present)</span></p>
+<p class="p15"><span class="s3">Supporting DESE applications. Refactored School Finance data pipeline, reducing 300,000+ database calls to a handful. Identified and remediated PII security vulnerabilities in production systems. Built RAG system for education policy on personal time.</span></p>
+<h3 style="margin: 0.0px 0.0px 7.2px 0.0px; font: 11.4px 'Helvetica Neue'; color: #234a1d; -webkit-text-stroke: #234a1d"><span class="s3">Previous Role</span></h3>
+<p class="p15"><span class="s6">Capital Markets Analyst</span><span class="s1"><br>
+</span><span class="s3">Veterans United Home Loans (Jul 2024 – Feb 2025)</span></p>
+<p class="p15"><span class="s3">Built XGBoost delinquency prediction models for billion-dollar mortgage portfolios. Optimized GNMA dashboard from 8-hour to 2-hour load time on 8B+ observations. Created Python automation saving 7–9 hours weekly.</span></p>
+<h3 style="margin: 0.0px 0.0px 7.2px 0.0px; font: 11.4px 'Helvetica Neue'; color: #234a1d; -webkit-text-stroke: #234a1d"><span class="s3">Education</span></h3>
+<p class="p15"><span class="s6">MA Economics</span><span class="s3"> – University of Missouri-St. Louis (2024)</span></p>
+<p class="p15"><span class="s6">Certificates:</span><span class="s3"> Data Science, Applied Econometrics, Artificial Intelligence</span></p>
+<p class="p15"><span class="s6">BA Economics</span><span class="s3"> – University of Cincinnati</span></p>
+<p class="p15"><span class="s6">Doctoral coursework</span><span class="s3"> – University of Illinois Chicago</span></p>
+<h3 style="margin: 0.0px 0.0px 7.2px 0.0px; font: 11.4px 'Helvetica Neue'; color: #234a1d; -webkit-text-stroke: #234a1d"><span class="s3">Technical Focus</span></h3>
+<p class="p15"><span class="s6">AI/ML:</span><span class="s3"> RAG systems, LLM integration, XGBoost, gradient boosting, SHAP explainability</span></p>
+<p class="p15"><span class="s6">Data:</span><span class="s3"> SQL optimization for billion-scale datasets, ETL pipeline development, SSIS</span></p>
+<p class="p15"><span class="s6">Methods:</span><span class="s3"> Causal inference, econometrics, time series, A/B testing</span></p>
+<p class="p16"><span class="s7"><a href="file:///Users/markattwood/Documents/GitHub/io/downloads/mark-attwood-resume.pdf">Download Resume (PDF)<span class="s1"></span></a></span></p>
+<h2 style="margin: 0.0px 0.0px 21.6px 0.0px; font: 18.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414"><span class="s1">Projects</span></h2>
+<p class="p17"><span class="s1"></span><br></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; font: 15.6px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414"><span class="s2">DESE Policy RAG System</span></h3>
+<p class="p19"><span class="s2">Production-ready retrieval-augmented generation system processing 22.6 million words of Missouri education statutes and policy documents. GPU-accelerated embeddings with sentence-transformers, hybrid search combining vector similarity with keyword boosting for statute number detection, and citation enforcement so every answer traces to its source. Runs locally on Linux with an 8GB GPU, designed for FERPA compliance.</span></p>
+<p class="p20"><span class="s1">Python</span></p>
+<p class="p20"><span class="s1">RAG</span></p>
+<p class="p20"><span class="s1">ChromaDB</span></p>
+<p class="p20"><span class="s1">sentence-transformers</span></p>
+<p class="p20"><span class="s1">PyTorch</span></p>
+<p class="p20"><span class="s1">CUDA</span></p>
+<p class="p21"><span class="s2"><a href="file:///Users/markattwood/Documents/GitHub/io/rag-system.html">View Project →<span class="s8"></span></a></span></p>
+<p class="p22"><span class="s1"></span><br></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; font: 13.8px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414"><span class="s2">GBM Framework</span></h3>
+<p class="p19"><span class="s2">Open-source Python package unifying XGBoost, LightGBM, and CatBoost with automated hyperparameter optimization, SHAP analysis, and system resource detection. Published on PyPI.</span></p>
+<p class="p20"><span class="s1">Python</span></p>
+<p class="p20"><span class="s1">Machine Learning</span></p>
+<p class="p20"><span class="s1">PyPI</span></p>
+<p class="p21"><span class="s2"><a href="file:///Users/markattwood/Documents/GitHub/io/gbm-framework.html">View Project →<span class="s8"></span></a></span></p>
+<p class="p24"><span class="s1"></span><br></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; font: 13.8px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414"><span class="s2">GNMA Delinquency Dashboard</span></h3>
+<p class="p19"><span class="s2">Interactive Tableau dashboard analyzing government-backed mortgage portfolio performance. Optimized SQL queries for 8B+ observations, reducing load time by 75%.</span></p>
+<p class="p20"><span class="s1">Tableau</span></p>
+<p class="p20"><span class="s1">SQL</span></p>
+<p class="p20"><span class="s1">Financial Analysis</span></p>
+<p class="p21"><span class="s2"><a href="file:///Users/markattwood/Documents/GitHub/io/gnma.html">View Project →<span class="s8"></span></a></span></p>
+<p class="p25"><span class="s1"></span><br></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; font: 13.8px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414"><span class="s2">Coffeeshop Site Selection</span></h3>
+<p class="p19"><span class="s2">Geospatial analysis combining ArcGIS Pro and Python web scraping to optimize business location using demographic data and market gap analysis.</span></p>
+<p class="p20"><span class="s1">ArcGIS Pro</span></p>
+<p class="p20"><span class="s1">Python</span></p>
+<p class="p20"><span class="s1">Geospatial</span></p>
+<p class="p21"><span class="s2"><a href="file:///Users/markattwood/Documents/GitHub/io/arcgis.html">View Project →<span class="s8"></span></a></span></p>
+<p class="p26"><span class="s1"></span><br></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; font: 13.8px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414"><span class="s2">Fleet Electrification BCA</span></h3>
+<p class="p19"><span class="s2">Comprehensive benefit-cost analysis of municipal fleet transition from ICE to electric vehicles for the City of Kirkwood.</span></p>
+<p class="p20"><span class="s1">Python</span></p>
+<p class="p20"><span class="s1">Cost-Benefit Analysis</span></p>
+<p class="p20"><span class="s1">Policy</span></p>
+<p class="p21"><span class="s2"><a href="file:///Users/markattwood/Documents/GitHub/io/fleet-cba.html">View Project →<span class="s8"></span></a></span></p>
+<p class="p27"><span class="s1"></span><br></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; font: 13.8px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414"><span class="s2">Gradient Boosting Benchmark</span></h3>
+<p class="p19"><span class="s2">Performance evaluation of gradient boosting algorithms across multiple datasets using the GBM Framework.</span></p>
+<p class="p20"><span class="s1">Machine Learning</span></p>
+<p class="p20"><span class="s1">Benchmarking</span></p>
+<p class="p20"><span class="s1">Python</span></p>
+<p class="p21"><span class="s2"><a href="file:///Users/markattwood/Documents/GitHub/io/benchmark-analysis.html">View Project →<span class="s8"></span></a></span></p>
+<p class="p28"><span class="s9">© 2025 Mark Attwood</span></p>
 </body>
 </html>
