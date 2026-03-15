@@ -366,13 +366,13 @@
             </div>
             
             <div class="about-content">
-                <p>I'm an economist turned data scientist who spent 12 years building a million-dollar coffee business while earning my MA in Economics. Now I focus on machine learning and statistical modeling, with a particular interest in causal inference and healthcare analytics.</p>
-                
-                <p>Economics taught me that stories are rarely simple and every decision has hidden costs. Data science lets me quantify these trade-offs and uncover the costs that surface-level analysis might miss. At Veterans United Home Loans, I developed delinquency prediction models for multi-billion dollar mortgage portfolios that replaced grid-based systems with continuous modeling. The old approach used discrete FICO score bins where a loan with a 759 score was valued identically to one with a 740 score, but a 760 score received a substantial jump in valuation despite minimal marginal risk difference. My continuous models revealed the hidden cost of this approach: suboptimal keep-versus-sell decisions that left money on the table when meeting portfolio retention targets.</p>
-                
-                <p>My self-directed work applies this same economic reasoning to broader problems. For coursework, I built a comprehensive benefit-cost analysis for the City of Kirkwood's fleet electrification policy, demonstrating how economic trade-offs play out in municipal decision-making. On my own time, I created an open-source Python package that unifies gradient boosting algorithms with automated hyperparameter optimization and system resource detection, filling a gap for analysts working on local machines without dedicated infrastructure teams. These projects reflect my belief that good analysis requires understanding both the technical tools and the underlying questions they're meant to answer.</p>
-                
-                <p>I'm drawn to problems where insights into causality can complement and yield as much value as predicting outcomes. I want to know not only what works, but why it works. This perspective becomes especially valuable when the stakes are high and getting the causal relationships right makes a real difference.</p>
+                <p>I'm an economist turned data scientist who spent 12 years building a million-dollar coffee business while earning my MA in Economics. Now I build predictive models and applied AI systems, with a particular interest in causal inference and the kind of machine learning that earns trust in high-stakes environments.</p>
+
+                <p>Economics taught me that stories are rarely simple and every decision has hidden costs. Machine learning lets me quantify those trade-offs with precision. At Veterans United Home Loans, I developed delinquency prediction models for multi-billion dollar mortgage portfolios that replaced grid-based systems with continuous modeling. The old approach used discrete FICO score bins where a loan with a 759 score was valued identically to one with a 740 score, but a 760 score received a substantial jump in valuation despite minimal marginal risk difference. My continuous models revealed the hidden cost: suboptimal keep-versus-sell decisions that left money on the table when meeting portfolio retention targets.</p>
+
+                <p>My current work is at the intersection of machine learning and state government systems. As a Business Analyst with Missouri's Office of Administration supporting DESE applications, I've traced and refactored legacy code that routed 300,000+ record-level database calls through chains of SSIS packages and intermediary applications — and replaced them with array-level SQL queries. On my own time, I built and deployed a production RAG system querying 22.6 million words of Missouri education policy, accessible at <a href="https://rag.attwoodanalytics.com" target="_blank">rag.attwoodanalytics.com</a>. The system uses GPU-accelerated embeddings, a domain-specific glossary with query-time acronym expansion, hybrid vector and keyword search, and citation enforcement. Building it taught me that corpus curation matters more than raw volume: systematic quality filtering reduced 38,199 raw chunks to 2,599 high-signal chunks and directly improved response quality.</p>
+
+                <p>I'm drawn to problems where predictive models and intelligent agents can do real work in production — not demo environments. I want to know not only what works, but why it works. That perspective becomes especially valuable in applied AI development, where trust in the system has to be earned through interpretability, reliability, and honest evaluation.</p>
             </div>
 
             <!-- Quick Facts -->
@@ -454,7 +454,7 @@
             <div class="nav-buttons">
                 <a href="#cv-preview" class="nav-button">View My Background</a>
                 <a href="#projects" class="nav-button secondary">See My Projects</a>
-                <a href="mailto:markattwood12@gmail.com" class="nav-button secondary">Get In Touch</a>
+                <a href="/cdn-cgi/l/email-protection#553834273e342121223a3a316467153238343c397b363a38" class="nav-button secondary">Get In Touch</a>
             </div>
         </section>
 
@@ -496,6 +496,22 @@
         <section id="projects">
             <h2>Featured Projects</h2>
             <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image" style="background-image: url('images/rag-system.jpg'); background-color: #1B4F72;"></div>
+                    <div class="project-content">
+                        <h3>Missouri Education Policy RAG System</h3>
+                        <p>Production retrieval-augmented generation system querying 22.6 million words of Missouri education policy. GPU-accelerated embeddings, hybrid vector and keyword search, domain glossary with query-time acronym expansion, and citation enforcement — deployed on personal hardware and live at <a href="https://rag.attwoodanalytics.com" target="_blank">rag.attwoodanalytics.com</a>.</p>
+                        <div class="project-tags">
+                            <span class="tag">RAG / LLM</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">ChromaDB</span>
+                        </div>
+                        <a href="https://rag.attwoodanalytics.com" target="_blank" class="view-project">Launch App</a>
+                    </div>
+                </div>
+
                 <div class="project-card">
                     <div class="project-image" style="background-image: url('images/gbm-framework.jpg'); background-color: #7E57C2;"></div>
                     <div class="project-content">
@@ -574,7 +590,7 @@
         <p>&copy; 2025 Mark Attwood Data Analytics</p>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -582,12 +598,4 @@
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+                        behav
